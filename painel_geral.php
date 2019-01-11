@@ -22,7 +22,7 @@
         ?>
 </div>
     <div class="titulo-secao">
-        Painel Colaboradores
+        Início
     </div>
     <div class="container-cadastrar">
         <div class="col-6">
@@ -49,6 +49,10 @@
         
     </div>
     
+    <div class="titulo-secao">
+        Próximos Prescritos:
+    </div>
+    
     <?php
         require_once 'Classes/cliente.php';
         $cliente = new Cliente();
@@ -57,6 +61,27 @@
         
     
     ?>
+    
+    <div class="titulo-secao">
+        Agendamentos para Hoje:
+    </div>
+    
+    <?php
+    
+        require_once 'Classes/Agendamento.php';
+        $agendamento = new Agendamento();
+        
+        //session_start();
+        $_SESSION['agDeHJ'] = true;
+        
+        $agendamento->listarAgendados(0, 0);
+        
+    
+    ?>
+    
+    <div class="titulo-secao">
+        Retornos para hoje:
+    </div>
     
 </body></html>
     

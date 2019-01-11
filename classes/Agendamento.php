@@ -21,10 +21,36 @@ class Agendamento {
         else{
     $where ='';}*/
 	
-	
+	/* RUBENS 28/12/2018:
+         * por causa uma demanda do cliente separei a cláusula where da query abaixo e coloquei dentro de uma condição
+         * que depende da variável session "agDeHJ" (agendamento de hoje) declarada em painel_geral.php linha 75
+         */
+        
+        
+        
         $query = ("select cast(a.data as time) as 'hora', cast(a.data as date) as 'data', c.nome, c.telefone, c.celular, c.ender, c.indicacao
-                   from agendamento a inner join cliente c on a.idcliente = c.id
-                   where a.data >='" . $dtInicial . "' and a.data <= '" . $dtFinal ."' order by a.data");
+                   from agendamento a inner join cliente c on a.idcliente = c.id ");
+        
+        /* RUBENS 28/12/2018:
+         * a condição abaixo depende da variável session "adDeHJ" explicada no comentário acima
+         * 
+         * se TRUE, ela faz com que a cláusula where só considere os agendamentos para o dia atual em que ela é usada (hoje)
+         * se FALSE, ela permite a cláusula where considerar o intervalo de 
+         *   tempo "$dtInicial" e "$dtFinal" (utilizadas quendo acessado pela página de listagem de agendamentos)
+         * 
+         */
+        
+        if(isset($_SESSION['agDeHJ'])){
+            if($_SESSION['agDeHJ'] == true){
+                $query = $query.'where cast(a.data as date) >= cast(now() as date) and cast(a.data as date) <= cast(now() as date) order by a.data';
+                $_SESSION['agDeHJ'] = FALSE;
+            }else{
+            $query = $query."where a.data >='" . $dtInicial . "' and a.data <= '" . $dtFinal ."' order by a.data";
+            }
+        }else{
+            $query = $query."where a.data >='" . $dtInicial . "' and a.data <= '" . $dtFinal ."' order by a.data";
+        }
+        
         
         //echo $query;
         

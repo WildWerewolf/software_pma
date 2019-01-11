@@ -41,8 +41,7 @@ class Cliente {
               } else {
                   $this-> setDataFinalEmpresa('null');
                 }
-        //session_start();
-
+        
         require_once 'conexao.php';
         $cnx = new conexao();
         
@@ -88,6 +87,8 @@ class Cliente {
         header("Location: listagem_clientes.php");
     
 	}
+
+    
 
     public function listarClientes($verprescritos) {
         require_once 'conexao.php';
