@@ -88,9 +88,15 @@ class Cliente {
     
 	}
 
+    /*
+        uso = 0 -> lista todos os clientes normalmente
+        uso = 1 -> lista os clientes que estão perto de prescrever
+        uso = 2 -> lista os clientes com datas de rotorno de contato programadas para o dia atual
     
+    --Rubens
+    */
 
-    public function listarClientes($verprescritos) {
+    public function listarClientes($uso) {
         require_once 'conexao.php';
         $cnx = new conexao();
 
@@ -108,22 +114,39 @@ class Cliente {
         }*/
 
         
-        // se true, verifica os clientes perto de prescrever e adiciona a clausula where para que eles sejam listados
-        if ($verprescritos == true) {
+        // se 1, verifica os clientes perto de prescrever e adiciona a clausula where para que eles sejam listados
+        if ($uso == 1) {
 
             // na conta feita pelo anderson
             // 700 é a diferença em dias de hoje até 2 anos atrás menos 1 mês
             // portanto essa data faz com que o aviso de prescrição fique de 1 mês antes da prescrição
             // se for pouco tempo, é só diminuir esse número na query abaixo
-            $query = 'select id from cliente where datediff(now(),datafinalempresa) >= 700';
-            $dados = $cnx->executarQuery($query);
-                //if(($where) == ' '){
-                    $where = ' where datediff(now(),c.datafinalempresa) >=700 ';
-                /*}else{
-                    $where = $where.' and datediff(now(),c.datafinalempresa) >=700 ';
-                }*/
+
+            //$query = 'select id from cliente where datediff(now(),datafinalempresa) >= 700';
+            //$dados = $cnx->executarQuery($query);
+            $where = ' where datediff(now(),c.datafinalempresa) >=700 ';
+            $from = 'from ((((cliente c inner join colaborador co on c.idcolcad = co.id)
+            inner join processo p on c.id = p.idcliente)
+            inner join adverso a on p.idadverso = a.id)
+            inner join ramo r on r.id = a.id_ramo) ';
+        }elseif($uso == 2){
+
+            $from = ' from ((((cliente c inner join colaborador co on c.idcolcad = co.id)
+                     inner join processo p on c.id = p.idcliente)
+                     inner join adverso a on p.idadverso = a.id)
+                     inner join ramo r on r.id = a.id_ramo)
+                     inner join contato con on con.idcliente = c.id ';
+
+            $where = ' where con.datacontato = cast(now() as date) ';
+
         }
-		else {$where = '';}
+		else {
+            $where = '';
+            $from = 'from ((((cliente c inner join colaborador co on c.idcolcad = co.id)
+            inner join processo p on c.id = p.idcliente)
+            inner join adverso a on p.idadverso = a.id)
+            inner join ramo r on r.id = a.id_ramo) ';
+        }
 
         $query = ("select c.id,concat((day(c.datainiempresa)),'/',(month(c.datainiempresa)),'/',(year(c.datainiempresa))) as 'datainiempresa',
                                concat((day(c.datafinalempresa)),'/',(month(c.datafinalempresa)),'/',(year(c.datafinalempresa))) as 'datafinalempresa', c.nome, c.telefone, c.celular, c.ender,
@@ -131,10 +154,7 @@ class Cliente {
                   r.nome as 'nomeramo',
                   c.cargo,c.indicacao,co.nome as 'cadastrador',
                                 concat((day(c.datacadastro)),'/',(month(c.datacadastro)),'/',(year(c.datacadastro))) as 'datacadastro'
-                                from ((((cliente c inner join colaborador co on c.idcolcad = co.id)
-                                inner join processo p on c.id = p.idcliente)
-                                inner join adverso a on p.idadverso = a.id)
-                                inner join ramo r on r.id = a.id_ramo)
+                                " . $from . "
                                 " . $where . " order by c.nome;");
 
         //echo $query;

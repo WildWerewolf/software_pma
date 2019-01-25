@@ -169,8 +169,9 @@ class Contato {
         $status = $formulario['status'];
         $obs = $formulario['obs'];
 
-        if (!isset($formulario['datacontato'])) {
+        if (isset($formulario['datacontato'])) {
             $dataContato = "'" . $formulario['datacontato'] . "'";
+            echo $formulario['datacontato'];
         } else {
             $dataContato = 'null';
         }
@@ -180,12 +181,12 @@ class Contato {
         $cnx = new conexao();
 
         $query = "insert into contato(idcolaborador,idcliente,status,obs,data,datacontato) "
-                . "values($idcolaborador, $idcliente, $status,'$obs', now(), $datacontato)";
-        //echo $query;
+                . "values($idcolaborador, $idcliente, $status,'$obs', now(), $dataContato)";
+        echo $query;
         $dados = $cnx->executarQuery($query);
 
 
-        header('Location: listagem_contato.php');
+        //header('Location: listagem_contato.php');
     }
 
     function getIdColaborador() {

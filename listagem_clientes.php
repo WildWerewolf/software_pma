@@ -22,7 +22,7 @@
     <?php 
         require_once 'classes/Cliente.php';
         $cliente = new Cliente();
-        $cliente->listarClientes(false);
+        $cliente->listarClientes(0);
     ?>
 
 </body>

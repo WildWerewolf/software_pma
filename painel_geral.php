@@ -57,7 +57,7 @@
         require_once 'Classes/cliente.php';
         $cliente = new Cliente();
         
-        $cliente->listarClientes(true);
+        $cliente->listarClientes(1);
         
     
     ?>
@@ -82,6 +82,16 @@
     <div class="titulo-secao">
         Retornos para hoje:
     </div>
+
+    <?php
+    
+        require_once 'Classes/Cliente.php';
+        $cliente = new Cliente();
+
+        $cliente->listarClientes(2);     
+        
+    
+    ?>
     
 </body></html>
     
