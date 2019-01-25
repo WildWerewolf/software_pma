@@ -36,7 +36,7 @@ class Agendamento {
          * 
          * se TRUE, ela faz com que a cláusula where só considere os agendamentos para o dia atual em que ela é usada (hoje)
          * se FALSE, ela permite a cláusula where considerar o intervalo de 
-         *   tempo "$dtInicial" e "$dtFinal" (utilizadas quendo acessado pela página de listagem de agendamentos)
+         *   tempo "$dtInicial" e "$dtFinal" (utilizadas quando acessado pela página de listagem de agendamentos)
          * 
          */
         

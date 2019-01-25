@@ -179,8 +179,8 @@ class Contato {
         require_once 'conexao.php';
         $cnx = new conexao();
 
-        $query = "insert into contato(idcolaborador,idcliente,status,obs,data) "
-                . "values($idcolaborador,$idcliente,$status,'$obs', now())";
+        $query = "insert into contato(idcolaborador,idcliente,status,obs,data,datacontato) "
+                . "values($idcolaborador, $idcliente, $status,'$obs', now(), $datacontato)";
         //echo $query;
         $dados = $cnx->executarQuery($query);
 
