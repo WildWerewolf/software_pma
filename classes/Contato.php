@@ -182,11 +182,11 @@ class Contato {
 
         $query = "insert into contato(idcolaborador,idcliente,status,obs,data,datacontato) "
                 . "values($idcolaborador, $idcliente, $status,'$obs', now(), $dataContato)";
-        echo $query;
+        //echo $query;
         $dados = $cnx->executarQuery($query);
 
 
-        //header('Location: listagem_contato.php');
+        header('Location: listagem_contato.php');
     }
 
     function getIdColaborador() {
