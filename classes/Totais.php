@@ -30,6 +30,8 @@ class Totais
         }
     }
 
+    //recebe o id do colaborador e o periodo para se contar os contatos do colaborador informado
+    //retorna o total de contatos feitos naquele período
     private function contatosDoColaborador($id, $periodo)
     {
         $this->instanciaCnx();
