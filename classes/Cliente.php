@@ -236,6 +236,125 @@ class Cliente {
         //echo '<A HREF=index.php?opcao=0 style="color:#f00"> VOLTAR MENU PRINCIPAL</A>';
     }
 
+    /**
+     * O método abaixo recebe uma letra e gera uma query para listar os clientes que começarem com a letra recebida
+     * depois ela chama o método listarResultados e esse é quem faz a listagem.
+     * 
+     * Filtros de segurança podem ser chamados aqui dentro.
+     * 
+     * Rubens 20/02/2019
+     */
+    public function listagemAlfabetica($letraInicial){
+        $query = "select c.id,concat((day(c.datainiempresa)),'/',(month(c.datainiempresa)),'/',(year(c.datainiempresa))) as 'datainiempresa',
+         concat((day(c.datafinalempresa)),'/',(month(c.datafinalempresa)),'/',(year(c.datafinalempresa))) as 'datafinalempresa',
+          c.nome, c.telefone, c.celular, c.ender, a.nome as 'nomeadverso', r.nome as 'nomeramo', c.cargo,c.indicacao,co.nome as 'cadastrador',
+           concat((day(c.datacadastro)),'/',(month(c.datacadastro)),'/',(year(c.datacadastro))) as 'datacadastro'
+         from ((((cliente c inner join colaborador co on c.idcolcad = co.id)
+         inner join processo p on c.id = p.idcliente)
+         inner join adverso a on p.idadverso = a.id)
+         inner join ramo r on r.id = a.id_ramo) where c.nome like '".$letraInicial."%' order by c.nome;";
+
+         //echo $query;
+
+         $this->listarResultados($query);
+
+
+    }
+
+
+    /**
+     * Esse método só lista os resultados da query que ela receber como argumento
+     * 
+     * Esse método(private) só deve ser chamado de dentro de outros métodos e nunca de outra classe
+     * 
+     * retirei o código do método listarClientes e pretendo aposentá-lo num futuro próximo pois está ficando muito complexo de se mexer lá
+     * 
+     * Rubens 20/02/2019
+     * 
+     */
+    private function listarResultados($query){
+
+        require_once 'conexao.php';
+        $cnx = new conexao();
+
+        //aplicando o sql no link e retornando do dataset (dados)
+        $dados = $cnx->executarQuery($query);
+
+        //apontando para a 1a. linha dataset
+        $linha = mysqli_fetch_array($dados);
+
+        //obtendo o total de registro do dataset
+        $total = mysqli_num_rows($dados);
+
+        $cont = 0;
+
+        //abre uma div para a tabela e abre a tag table
+        echo '<div class="tabela_listagem_clientes container-tabela" style="padding:2%">
+        <table cellpadding="6" cellspacing="0" border="0" class="tabela-borda" width="80%">';
+
+        //define os nomes das colunas a serem exibidas
+        echo '<tr class="tabela-categorias">
+                <td><i class="fas fa-user"></i> Nome</td>
+                <td><i class="fas fa-phone"></i> Telefone</td>
+                <td><i class="fas fa-mobile-alt"></i> Celular</td>
+                <td><i class="fas fa-map-marked-alt"></i> Período</td>
+                <td><i class="fas fa-angle-down"></i> Adversos</td>
+                <td><i class="fas fa-angle-double-right"></i> Categoria</td>
+                <td><i class="fas fa-address-card"></i> Cargo</td>
+                <td><i class="fas fa-hand-point-right"></i> Indicado de</td>
+                <td><i class="fas"></i> Cadastrado Por </td>
+                <td>Cadastro</td>
+                <td><i class="fas fa-user-edit"></i> Operações Cliente</td>
+            </tr>';
+
+        // com o resultado do sql, lista as linhas dos resultados por um loop de repetição
+        while ($cont < $total) {
+            echo '<tr class="tabela-preenchimento">
+                <td>' . $linha['nome'] . '</td>
+                <td>' . $linha['telefone'] . '</td>
+                <td>' . $linha['celular'] . '</td>
+                <td>' . $linha['datainiempresa'] . ' - ';
+                
+                if(is_null($linha['datafinalempresa']) || $linha['datafinalempresa'] == '0/0/0'){
+                    echo 'atual';
+                }else{
+                    echo $linha['datafinalempresa'];
+                }
+            
+                echo '</td>
+                <td>' . $linha['nomeadverso'] . '</td>
+                <td>' . utf8_encode($linha['nomeramo']) . '</td>
+                <td>' . $linha['cargo'] . '</td>';
+
+            // verifica se a indicação obtida é null
+            //  se sim, imprime tracinhos kkkk
+            //  senão, busca e imprime o nome do cliente que indicou
+            if (!is_null($linha['indicacao'])) {
+                $query = "select nome from cliente where id = " . $linha['indicacao'];
+                $dados2 = $cnx->executarQuery($query);
+                $linha2 = mysqli_fetch_array($dados2);
+                echo '<td>' . $linha2['nome'] . '</td>';
+            } else {
+                echo '<td> - - - - - - - - </td>';
+            }
+
+
+            echo'<td><strong>' . $linha['cadastrador'] . '</strong></td>    
+                <td>' . $linha['datacadastro'] . '</td>
+                <td> <a href="registra_contato.php?id=' . $linha['id'] . '" > <button class="btn_editar">Contato</button></a>
+                <a href="registra_agendamento.php?id=' . $linha['id'] . '" ><button class="btn_salvar">Agendar</button></a>
+				<!--<a href="Perfil.php?id=' . $linha['id'] . '" ><button class="btn_editar">Editar</button></a>--></td>
+            </tr>';
+
+            $linha = mysqli_fetch_assoc($dados);
+            $cont++;
+        }
+
+        echo ('</table></div>');
+        //echo '<A HREF=index.php?opcao=0 style="color:#f00"> VOLTAR MENU PRINCIPAL</A>';
+
+    }
+
     public function instanciar($id) {
 
         $this->setId($id);
