@@ -23,7 +23,7 @@
     <div class="alfabeto">
 
         <?php
-
+            
             /**
              * O código abaixo cria um alfabeto e torna as letras em links que indicam a inicial dos clientes 
              * que o usuário deseja listar.
@@ -36,7 +36,7 @@
             while($cont < 26){
 
                 if(isset($_GET['letra'])){
-                    $letraClicada = $_GET['letra'];
+                    $letraClicada = strtolower($_GET['letra']);
                     /**
                      * a condição acima verifica se já há uma letra selecionada
                      */
