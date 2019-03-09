@@ -39,7 +39,7 @@ class Totais
         $query = 'SELECT count(c.obs) as "total"
                     from contato c inner join colaborador col on col.id = c.idcolaborador 
                     where idcolaborador = ' . $id . ' and month(cast(c.data as date)) = ' . $periodo;
-        
+        // ." and year(cast(c.data as date) = ".$ano
         //echo $query. '<br><br>';
 
         $dados = $this->cnx->executarQuery($query);
@@ -49,7 +49,24 @@ class Totais
         return $linha['total'];
     }
 
-    private function resoveMes($mes){
+    private function contatosNaoAtendidos($id, $periodo)
+    {
+        $this->instanciaCnx();
+
+        $query = 'SELECT count(c.obs) as "total"
+                    from contato c inner join colaborador col on col.id = c.idcolaborador 
+                    where idcolaborador = ' . $id . ' and month(cast(c.data as date)) = ' . $periodo." and c.status = ";
+        // ." and year(cast(c.data as date) = ".$ano
+        //echo $query. '<br><br>';
+
+        $dados = $this->cnx->executarQuery($query);
+
+        $linha = mysqli_fetch_array($dados);
+
+        return $linha['total'];
+    }
+
+    private function resolveMes($mes){
         switch ($mes) {
             case 1:
                 return "Janeiro";
@@ -101,7 +118,7 @@ class Totais
         $cont = 0;
 
 
-        echo '<strong> ' . $this->resoveMes($periodo) . '</strong>';
+        echo '<strong> ' . $this->resolveMes($periodo) . '</strong>';
 
         echo '<table>';
 
