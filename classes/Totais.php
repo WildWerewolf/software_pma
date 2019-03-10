@@ -12,12 +12,12 @@ class Totais
     }
 
 
-    //faz a query para obter todos os colaboradores e retorna o resultado dessa query
+    //faz a query para obter todos os colaboradores ativos e retorna o resultado dessa query
     private function obterColaboradores()
     {
         $this->instanciaCnx();
 
-        $query = "select id, nome from colaborador";
+        $query = "select id, nome from colaborador where status = 1";
 
         $dados = $this->cnx->executarQuery($query);
 
@@ -30,32 +30,45 @@ class Totais
         }
     }
 
-    //recebe o id do colaborador e o periodo para se contar os contatos do colaborador informado
-    //retorna o total de contatos feitos naquele período
-    private function contatosDoColaborador($id, $periodo)
+    //recebe o id do colaborador,o mes, o ano e o status de contato para se contar os contatos do colaborador informado
+    //retorna o total de contatos com o status recebido durante o mes e ano especificado
+    private function contatosDoColaborador($id, $mes, $ano, $statusContato)
     {
         $this->instanciaCnx();
 
-        $query = 'SELECT count(c.obs) as "total"
+        /*
+         * statusContato = 16 significa não especificar qual tipo de contato procurar, 
+         * então a query vai listar todos os contatos desse colaborador no período independente do status
+         */
+        if($statusContato == 16){
+            $whereStatusContato = '';
+        }else{
+            $whereStatusContato = ' and (c.status = '.$statusContato.')';
+        }
+
+        $query = 'SELECT count(distinct(c.obs)) as "total"
                     from contato c inner join colaborador col on col.id = c.idcolaborador 
-                    where idcolaborador = ' . $id . ' and month(cast(c.data as date)) = ' . $periodo;
-        // ." and year(cast(c.data as date) = ".$ano
+                      where (idcolaborador = ' . $id .')'.
+            ' and (month(cast(c.data as date)) = ' . $mes .')'.
+            ' and (year(cast(c.data as date)) = '. $ano .')'.
+            $whereStatusContato.';';
+          
         //echo $query. '<br><br>';
 
         $dados = $this->cnx->executarQuery($query);
 
         $linha = mysqli_fetch_array($dados);
 
-        return $linha['total'];
+          return $linha['total'];
     }
 
-    private function contatosNaoAtendidos($id, $periodo)
-    {
+    private function contatosNaoAtendidos($id, $mes){
+
         $this->instanciaCnx();
 
         $query = 'SELECT count(c.obs) as "total"
                     from contato c inner join colaborador col on col.id = c.idcolaborador 
-                    where idcolaborador = ' . $id . ' and month(cast(c.data as date)) = ' . $periodo." and c.status = ";
+                    where idcolaborador = ' . $id . ' and month(cast(c.data as date)) = ' . $mes." and c.status = ";
         // ." and year(cast(c.data as date) = ".$ano
         //echo $query. '<br><br>';
 
@@ -107,7 +120,7 @@ class Totais
         }
     }
 
-    public function listarColaboradores($periodo)
+    public function listarColaboradores($mes, $ano, $statusContato)
     {
         $dados = $this->obterColaboradores();
 
@@ -118,14 +131,16 @@ class Totais
         $cont = 0;
 
 
-        echo '<strong> ' . $this->resolveMes($periodo) . '</strong>';
+        echo '<strong> ' . $this->resolveMes($mes) . '</strong>';
 
-        echo '<table>';
+        echo '<br><br><table>';
+
+        echo '<tr> <td> <strong>Colaborador</strong> </td>';
 
         while ($cont < $total) {
 
             echo '<tr><td>' . $linha['nome'] . '</td>
-                <td> ' . $this->contatosDoColaborador($linha['id'], $periodo) . '</tr>';
+                <td> ' . $this->contatosDoColaborador($linha['id'], $mes, $ano, $statusContato) . '</tr>';
 
             $linha = mysqli_fetch_assoc($dados);
             $cont++;
