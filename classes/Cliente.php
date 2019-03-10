@@ -6,6 +6,7 @@ class Cliente {
     private $nome;
     private $telefone;
     private $celular;
+    private $email;
     private $ender;
     private $adverso;
     private $cargo;
@@ -20,6 +21,7 @@ class Cliente {
         $this->setNome(strtoupper($dados['nome']));
         $this->setTelefone($dados['telefone']);
         $this->setCelular($dados['celular']);
+        $this->setEmail($dados['email']);
         $this->setEnder($dados['endereco']);
         $this->setAdverso(strtoupper($dados['adverso']));
         $this->setCargo(strtoupper($dados['cargo']));
@@ -63,8 +65,8 @@ class Cliente {
 
        
         
-        $query = ("insert into cliente (nome, telefone, celular, ender, cargo, indicacao, idcolcad, datacadastro,datainiempresa,datafinalempresa) values "
-                . "('$this->nome','$this->telefone','$this->celular','$this->ender','$this->cargo',$this->indicacao,$this->idcolcad,now(),$this->datainiempresa,$this->datafinalempresa);");
+        $query = ("insert into cliente (nome, telefone, celular, email, ender, cargo, indicacao, idcolcad, datacadastro,datainiempresa,datafinalempresa) values "
+                . "('$this->nome','$this->telefone','$this->celular','$this->email','$this->ender','$this->cargo',$this->indicacao,$this->idcolcad,now(),$this->datainiempresa,$this->datafinalempresa);");
         
         echo $query . '<br><br>';
 
@@ -194,7 +196,7 @@ class Cliente {
             echo '<tr class="tabela-preenchimento">
                 <td>' . $linha['nome'] . '</td>
                 <td>' . $linha['telefone'] . '</td>
-                <td>' . $linha['celular'] . '</td>
+                <td>' . $linha['celular'] . '</td>              
                 <td>' . $linha['datainiempresa'] . ' - ';
                 
                 if(is_null($linha['datafinalempresa']) || $linha['datafinalempresa'] == '0/0/0'){
@@ -223,9 +225,8 @@ class Cliente {
 
             echo'<td><strong>' . $linha['cadastrador'] . '</strong></td>    
                 <td>' . $linha['datacadastro'] . '</td>
-                <td> <a href="registra_contato.php?id=' . $linha['id'] . '" > <button class="btn_editar">Contato</button></a>
-                <a href="registra_agendamento.php?id=' . $linha['id'] . '" ><button class="btn_salvar">Agendar</button></a>
-				<!--<a href="Perfil.php?id=' . $linha['id'] . '" ><button class="btn_editar">Editar</button></a>--></td>
+                <td>
+				<a href="Perfil_cliente.php?id=' . $linha['id'] . '" ><button class="btn_editar cadastro_btn">Perfil</button></a>
             </tr>';
 
             $linha = mysqli_fetch_assoc($dados);
@@ -234,131 +235,20 @@ class Cliente {
 
         echo ('</table></div>');
         //echo '<A HREF=index.php?opcao=0 style="color:#f00"> VOLTAR MENU PRINCIPAL</A>';
-    }
-
-    /**
-     * O método abaixo recebe uma letra e gera uma query para listar os clientes que começarem com a letra recebida
-     * depois ela chama o método listarResultados e esse é quem faz a listagem.
-     * 
-     * Filtros de segurança podem ser chamados aqui dentro.
-     * 
-     * Rubens 20/02/2019
-     */
-    public function listagemAlfabetica($letraInicial){
-        $query = "select c.id,concat((day(c.datainiempresa)),'/',(month(c.datainiempresa)),'/',(year(c.datainiempresa))) as 'datainiempresa',
-         concat((day(c.datafinalempresa)),'/',(month(c.datafinalempresa)),'/',(year(c.datafinalempresa))) as 'datafinalempresa',
-          c.nome, c.telefone, c.celular, c.ender, a.nome as 'nomeadverso', r.nome as 'nomeramo', c.cargo,c.indicacao,co.nome as 'cadastrador',
-           concat((day(c.datacadastro)),'/',(month(c.datacadastro)),'/',(year(c.datacadastro))) as 'datacadastro'
-         from ((((cliente c inner join colaborador co on c.idcolcad = co.id)
-         inner join processo p on c.id = p.idcliente)
-         inner join adverso a on p.idadverso = a.id)
-         inner join ramo r on r.id = a.id_ramo) where c.nome like '".$letraInicial."%' order by c.nome;";
-
-         //echo $query;
-
-         $this->listarResultados($query);
-
-
-    }
-
-
-    /**
-     * Esse método só lista os resultados da query que ela receber como argumento
-     * 
-     * Esse método(private) só deve ser chamado de dentro de outros métodos e nunca de outra classe
-     * 
-     * retirei o código do método listarClientes e pretendo aposentá-lo num futuro próximo pois está ficando muito complexo de se mexer lá
-     * 
-     * Rubens 20/02/2019
-     * 
-     */
-    private function listarResultados($query){
-
-        require_once 'conexao.php';
-        $cnx = new conexao();
-
-        //aplicando o sql no link e retornando do dataset (dados)
-        $dados = $cnx->executarQuery($query);
-
-        //apontando para a 1a. linha dataset
-        $linha = mysqli_fetch_array($dados);
-
-        //obtendo o total de registro do dataset
-        $total = mysqli_num_rows($dados);
-
-        $cont = 0;
-
-        //abre uma div para a tabela e abre a tag table
-        echo '<div class="tabela_listagem_clientes container-tabela" style="padding:2%">
-        <table cellpadding="6" cellspacing="0" border="0" class="tabela-borda" width="80%">';
-
-        //define os nomes das colunas a serem exibidas
-        echo '<tr class="tabela-categorias">
-                <td><i class="fas fa-user"></i> Nome</td>
-                <td><i class="fas fa-phone"></i> Telefone</td>
-                <td><i class="fas fa-mobile-alt"></i> Celular</td>
-                <td><i class="fas fa-map-marked-alt"></i> Período</td>
-                <td><i class="fas fa-angle-down"></i> Adversos</td>
-                <td><i class="fas fa-angle-double-right"></i> Categoria</td>
-                <td><i class="fas fa-address-card"></i> Cargo</td>
-                <td><i class="fas fa-hand-point-right"></i> Indicado de</td>
-                <td><i class="fas"></i> Cadastrado Por </td>
-                <td>Cadastro</td>
-                <td><i class="fas fa-user-edit"></i> Operações Cliente</td>
-            </tr>';
-
-        // com o resultado do sql, lista as linhas dos resultados por um loop de repetição
-        while ($cont < $total) {
-            echo '<tr class="tabela-preenchimento">
-                <td>' . $linha['nome'] . '</td>
-                <td>' . $linha['telefone'] . '</td>
-                <td>' . $linha['celular'] . '</td>
-                <td>' . $linha['datainiempresa'] . ' - ';
-                
-                if(is_null($linha['datafinalempresa']) || $linha['datafinalempresa'] == '0/0/0'){
-                    echo 'atual';
-                }else{
-                    echo $linha['datafinalempresa'];
-                }
-            
-                echo '</td>
-                <td>' . $linha['nomeadverso'] . '</td>
-                <td>' . utf8_encode($linha['nomeramo']) . '</td>
-                <td>' . $linha['cargo'] . '</td>';
-
-            // verifica se a indicação obtida é null
-            //  se sim, imprime tracinhos kkkk
-            //  senão, busca e imprime o nome do cliente que indicou
-            if (!is_null($linha['indicacao'])) {
-                $query = "select nome from cliente where id = " . $linha['indicacao'];
-                $dados2 = $cnx->executarQuery($query);
-                $linha2 = mysqli_fetch_array($dados2);
-                echo '<td>' . $linha2['nome'] . '</td>';
-            } else {
-                echo '<td> - - - - - - - - </td>';
-            }
-
-
-            echo'<td><strong>' . $linha['cadastrador'] . '</strong></td>    
-                <td>' . $linha['datacadastro'] . '</td>
-                <td> <a href="registra_contato.php?id=' . $linha['id'] . '" > <button class="btn_editar">Contato</button></a>
-                <a href="registra_agendamento.php?id=' . $linha['id'] . '" ><button class="btn_salvar">Agendar</button></a>
-				<!--<a href="Perfil.php?id=' . $linha['id'] . '" ><button class="btn_editar">Editar</button></a>--></td>
-            </tr>';
-
-            $linha = mysqli_fetch_assoc($dados);
-            $cont++;
-        }
-
-        echo ('</table></div>');
-        //echo '<A HREF=index.php?opcao=0 style="color:#f00"> VOLTAR MENU PRINCIPAL</A>';
-
     }
 
     public function instanciar($id) {
 
         $this->setId($id);
-        $query = "Select * from cliente where id=" . $id;
+        $query = "select 
+        c.id,c.nome,c.telefone,c.celular,c.ender,c.cargo,c.datainiempresa,c.datafinalempresa,c.indicacao,c.email,
+        a.id as 'idadverso',a.nome as 'adverso',
+        r.id as 'idramo',r.nome as 'ramo' 
+         from (((cliente c
+         inner join processo p on p.idCliente = c.id)
+         inner join adverso a on a.id = p.idAdverso)
+         inner join  ramo r on r.id = a.id_Ramo)
+         where c.id = " . $id;
 
         require_once 'conexao.php';
         $cnx = new conexao();
@@ -366,50 +256,97 @@ class Cliente {
         $dados = $cnx->executarQuery($query);
         $linha = mysqli_fetch_array($dados);
         $this->setNome($linha['nome']);
+        $this->setTelefone($linha['telefone']);
+        $this->setCelular($linha['celular']);
+        $this->setEmail($linha['email']);
+        $this->setEnder($linha['ender']);
+        $this->setAdverso($linha['adverso']);
+        $this->setCargo($linha['cargo']);
+        $this->setDataIniEmpresa($linha['datainiempresa']);
+        $this->setDataFinalEmpresa($linha['datafinalempresa']);
+        $this->setRamo($linha['idramo']);
+        $this->setIndicacao($linha['indicacao']);
     }
+
 	
-	//Comentario a baixo é o atualiza cliente que ainda não esta funcionando
+	//Comentario abaixo é o atualiza cliente que ainda não esta funcionando
 	
-	    /*public function atualizarClientes($formulario) {
+	   public function atualizarCliente($formulario) {
+       require_once 'conexao.php';
         $cnx = new conexao();
-        
+        $idcliente = $_SESSION['cliente'];
         $query = "update cliente set ";
         
         if(isset($formulario['nome'])){
-            $query = $query."nome = '".strtoupper($formulario['nome'])."'";
+            $query = $query."nome = '".strtoupper($formulario['nome'])."',";
         }
         
         if(isset($formulario['telefone'])){
-            $query = $query."telefone = '".strtoupper($formulario['telefone'])."'";
+            $query = $query."telefone = '".strtoupper($formulario['telefone'])."',";
         }
         
         if(isset($formulario['celular'])){
-            $query = $query."celular = '".strtoupper($formulario['celular'])."'";
+            $query = $query."celular = '".strtoupper($formulario['celular'])."',";
+        }
+
+        if(isset($formulario['email'])){
+            $query = $query."email = '".strtoupper($formulario['email'])."',";
         }
 		
 		if(isset($formulario['datainiempresa'])){
-            $query = $query."datainiempresa = '".strtoupper($formulario['datainiempresa'])."'";
+            $query = $query."datainiempresa = '".strtoupper($formulario['datainiempresa'])."',";
         }
 		
 		if(isset($formulario['datafinalempresa'])){
-            $query = $query."datafinalempresa = '".strtoupper($formulario['datafinalempresa'])."'";
+            if(empty($formulario['datafinalempresa'])) {
+                $query = $query.'datafinalempresa = null , ';        
+               } else {
+                $query = $query."datafinalempresa = '".strtoupper($formulario['datafinalempresa'])."',";
+             }
+     
+           
         }
 		
 		if(isset($formulario['nomeadverso'])){
-            $query = $query."nomeadverso = '".strtoupper($formulario['nomeadverso'])."'";
+            $query = $query."nomeadverso = '".strtoupper($formulario['nomeadverso'])."',";
         }
 		
 		if(isset($formulario['nomeramo'])){
-            $query = $query."nomeramo = '".strtoupper($formulario['nomeramo'])."'";
+            $query = $query."nomeramo = '".strtoupper($formulario['nomeramo'])."',";
         }
 		
 		if(isset($formulario['cargo'])){
-            $query = $query."cargo = '".strtoupper($formulario['cargo'])."'";
+            $query = $query."cargo = '".strtoupper($formulario['cargo'])."',";
         }
 		
 		if(isset($formulario['indicacao'])){
-            $query = $query."indicacao = '".strtoupper($formulario['indicacao'])."'";
+            if (empty($formulario['indicacao'])) {
+                $query = $query.'indicacao = null  ';
+            } else {
+                $query = $query."indicacao = '".strtoupper($formulario['indicacao'])."' ";
+            }
+           
         }
+
+        $query = $query."where id = ".$idcliente."";
+        //echo $query;
+        
+         $cnx->executarQuery($query);
+        
+        $this->setNome($linha['nome']);
+        $this->setTelefone($linha['telefone']);
+        $this->setCelular($linha['celular']);
+        $this->setEmail($linha['email']);
+        $this->setEnder($linha['ender']);
+        $this->setAdverso($linha['adverso']);
+        $this->setCargo($linha['cargo']);
+        $this->setDataIniEmpresa($linha['datainiempresa']);
+        $this->setDataFinalEmpresa($linha['datafinalempresa']);
+        $this->setRamo($linha['idramo']);
+        $this->setIndicacao($linha['indicacao']);
+         
+        header('Location:perfil_cliente.php?id='.$idcliente);
+    }
         
         /*SOBRE QUANDO A INTENÇÃO DO USUÁRIO ERA 
          * TROCAR O STATUS OU NÃO E SE O INPUT 
@@ -498,6 +435,9 @@ class Cliente {
     function getCelular() {
         return $this->celular;
     }
+    function getEmail() {
+        return $this->email;
+    }
 
     function getEnder() {
         return $this->ender;
@@ -539,6 +479,9 @@ class Cliente {
 
     function setCelular($celular) {
         $this->celular = $celular;
+    }
+    function setemail($email) {
+        $this->email = $email;
     }
 
     function setEnder($ender) {

@@ -86,8 +86,6 @@
 				<option value="13">Atendeu</option>
 				<option value="14">Agendamento Confirmado</option>
 				<option value="15">Não Compareceu</option>
-                <option value="16">Em Andamento</option>
-                <option value="17">Pendências</option>
 				
             </select>
         

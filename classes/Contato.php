@@ -121,12 +121,8 @@ class Contato {
             return 'Atendeu';
         } elseif ($status == 14) {
             return 'Agendamento Confirmado';
-        }elseif($status == 15){
+        } else {
             return 'Não Compareceu';
-        }elseif($status == 16) {
-            return 'Em andamento';
-        }else{
-            return 'Pendências';
         }
     }
 
