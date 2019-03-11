@@ -472,6 +472,25 @@ a{
     margin: 0 auto;*/
 }
 
+/*classe criada por Rubens*/
+.alfabeto{
+    text-align: center;
+    margin-top: 34px;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 600;
+    color: #272727;
+
+}
+/*classe criada por Rubens*/
+.alfabeto a{
+    color: inherit;
+}
+/*classe criada por Rubens*/
+.letra_clicada{
+    font-size: 25px;
+}
+
 .container-datas{
     display: flex;
     justify-content: space-between;
