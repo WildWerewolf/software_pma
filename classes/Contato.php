@@ -234,7 +234,7 @@ class Contato {
         $this->data = $data;
     }
 
-    function setDataContato($dataContato) {
+    function setDataContato($data) {
         $this->data = $data;
     }
 
