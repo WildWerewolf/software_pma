@@ -173,8 +173,8 @@ class Cliente {
         $cont = 0;
 
         //abre uma div para a tabela e abre a tag table
-        echo '<div class="tabela_listagem_clientes container-tabela" style="padding:2%">
-        <table cellpadding="6" cellspacing="0" border="0" class="tabela-borda" width="80%">';
+        echo '<div class="tabela_listagem_clientes container-tabela col-12" style="padding:2%">
+        <table cellpadding="0px" cellspacing="0" border="0" class="tabela-borda" width="auto">';
 
         //define os nomes das colunas a serem exibidas
         echo '<tr class="tabela-categorias">
@@ -269,7 +269,7 @@ class Cliente {
     }
 
 	
-	//Comentario abaixo é o atualiza cliente que ainda não esta funcionando
+	//abaixo é o atualizarCliente editado por Douglas
 	
 	   public function atualizarCliente($formulario) {
        require_once 'conexao.php';
@@ -307,16 +307,12 @@ class Cliente {
            
         }
 		
-		if(isset($formulario['nomeadverso'])){
-            $query = $query."nomeadverso = '".strtoupper($formulario['nomeadverso'])."',";
-        }
-		
-		if(isset($formulario['nomeramo'])){
-            $query = $query."nomeramo = '".strtoupper($formulario['nomeramo'])."',";
-        }
-		
 		if(isset($formulario['cargo'])){
             $query = $query."cargo = '".strtoupper($formulario['cargo'])."',";
+        }
+
+        if(isset($formulario['endereco'])){
+            $query = $query."ender = '".strtoupper($formulario['endereco'])."',";
         }
 		
 		if(isset($formulario['indicacao'])){
@@ -328,11 +324,21 @@ class Cliente {
            
         }
 
+
+
         $query = $query."where id = ".$idcliente."";
-        //echo $query;
+        echo $query;
         
          $cnx->executarQuery($query);
-        
+
+         if(!empty($formulario['novoadverso']) && !empty($formulario['novoramo'])){
+
+             $this->adicionarAdverso($idcliente,$formulario['novoadverso'],$formulario['novoramo']);
+
+            }
+
+
+        /*
         $this->setNome($linha['nome']);
         $this->setTelefone($linha['telefone']);
         $this->setCelular($linha['celular']);
@@ -344,9 +350,28 @@ class Cliente {
         $this->setDataFinalEmpresa($linha['datafinalempresa']);
         $this->setRamo($linha['idramo']);
         $this->setIndicacao($linha['indicacao']);
-         
+        */
         header('Location:perfil_cliente.php?id='.$idcliente);
     }
+
+        private function adicionarAdverso($idcliente, $nome, $ramo){
+            
+            require_once 'conexao.php';
+            $cnx = new conexao();
+            
+            $query = 'insert into adverso (nome,id_ramo, idcolcad) values ("'.$nome.'",'.$ramo.','.$_SESSION['idcolaborador'].')';
+
+            $cnx->executarQuery($query);
+
+            $query = 'select max(id) as "id" from adverso where idcolcad = '.$_SESSION['idcolaborador'];
+
+            $dados = $cnx->executarQuery($query);
+            $linha = mysqli_fetch_array($dados);
+
+            $query = "insert into processo values (".$idcliente.",".$linha['id'].")";
+
+            $cnx->executarQuery($query);
+        }
         
         /*SOBRE QUANDO A INTENÇÃO DO USUÁRIO ERA 
          * TROCAR O STATUS OU NÃO E SE O INPUT 

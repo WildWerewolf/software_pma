@@ -113,7 +113,10 @@
         	<br>
         	<br>
         <div class="col-6">
-            <a href="listagem_clientes.php">
+            <?php
+            echo '<a href="perfil_cliente.php?id='.$_GET['id'].'">';
+            ?>
+            
             <button type="button" class="cadastro_cancelar cadastro_btn" placeholder="Digite o nome do cliente">Cancelar</button>
             </a>
         </div>

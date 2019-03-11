@@ -77,8 +77,11 @@
         	<br>
         	<br>
         <div class="col-6">
+        <?php
+            echo '<a href="perfil_cliente.php?id='.$_GET['id'].'">';
+            ?>
             <button type="button" class="cadastro_cancelar cadastro_btn" placeholder="Digite o nome do cliente">Cancelar</button>
-        </div>
+        </a></div>
         <div class="col-6">
             <button type="submit" class="cadastro_cadastrar cadastro_btn" placeholder="Digite o nome do cliente" id="btn_submit">Cadastrar</button>
         </div>
