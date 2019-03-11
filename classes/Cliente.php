@@ -159,7 +159,7 @@ class Cliente {
                                 " . $from . "
                                 " . $where . " order by c.nome;");
 
-        //echo $query;
+        echo $query;
         
         //aplicando o sql no link e retornando do dataset (dados)
         $dados = $cnx->executarQuery($query);
@@ -226,7 +226,7 @@ class Cliente {
             echo'<td><strong>' . $linha['cadastrador'] . '</strong></td>    
                 <td>' . $linha['datacadastro'] . '</td>
                 <td>
-				<a href="Perfil_cliente.php?id=' . $linha['id'] . '" ><button class="btn_editar cadastro_btn">Perfil</button></a>
+				<a href="Perfil_cliente.php?id=' . $linha['id'] . '" ><button class="btn_editar cadastro_btn">Perfil</button></a></td>
             </tr>';
 
             $linha = mysqli_fetch_assoc($dados);
@@ -272,7 +272,7 @@ class Cliente {
 	//abaixo é o atualizarCliente editado por Douglas
 	
 	   public function atualizarCliente($formulario) {
-       require_once 'conexao.php';
+        require_once 'conexao.php';
         $cnx = new conexao();
         $idcliente = $_SESSION['cliente'];
         $query = "update cliente set ";
@@ -391,11 +391,89 @@ class Cliente {
          inner join adverso a on p.idadverso = a.id)
          inner join ramo r on r.id = a.id_ramo) where c.nome like '".$letraInicial."%' order by c.nome;";
 
+        $querysimples = 'select c.id as "id",c.nome as "nome", col.nome as "cadastrador", c.datacadastro as "datacadastro" 
+        from cliente c inner join colaborador col on c.idcolcad = col.id where c.nome like "'.$letraInicial.'%" order by c.nome;';
+
          //echo $query;
 
-         $this->listarResultados($query);
+         $this->listarResultados($querysimples);
 
 
+    }
+
+    public function listagemPrescritos(){
+        $query = "select c.id,concat((day(c.datainiempresa)),'/',(month(c.datainiempresa)),'/',(year(c.datainiempresa))) as 'datainiempresa', concat((day(c.datafinalempresa)),'/',(month(c.datafinalempresa)),'/',(year(c.datafinalempresa))) as 'datafinalempresa', c.nome, c.telefone, c.celular, c.ender, a.nome as 'nomeadverso', r.nome as 'nomeramo', c.cargo,c.indicacao,co.nome as 'cadastrador', concat((day(c.datacadastro)),'/',(month(c.datacadastro)),'/',(year(c.datacadastro))) as 'datacadastro' from ((((cliente c inner join colaborador co on c.idcolcad = co.id) inner join processo p on c.id = p.idcliente) inner join adverso a on p.idadverso = a.id) inner join ramo r on r.id = a.id_ramo) where datediff(now(),c.datafinalempresa) >=700 order by c.nome;";
+
+        $novaQueryPrescritos = 'select c.id as "id",c.nome as "nome", col.nome as "cadastrador", c.datacadastro as "datacadastro" 
+        from cliente c inner join colaborador col on c.idcolcad = col.id 
+        where datediff(now(),c.datafinalempresa) >=700 order by c.nome;';
+
+        $this->listarResultados($novaQueryPrescritos);
+    }
+
+    public function listarRetornos(){
+        $query = "SELECT
+        c.id,
+        CONCAT(
+            (DAY(c.datainiempresa)),
+            '/',
+            (MONTH(c.datainiempresa)),
+            '/',
+            (YEAR(c.datainiempresa))
+        ) AS 'datainiempresa',
+        CONCAT(
+            (DAY(c.datafinalempresa)),
+            '/',
+            (MONTH(c.datafinalempresa)),
+            '/',
+            (YEAR(c.datafinalempresa))
+        ) AS 'datafinalempresa',
+        c.nome,
+        c.telefone,
+        c.celular,
+        c.ender,
+        a.nome AS 'nomeadverso',
+        r.nome AS 'nomeramo',
+        c.cargo,
+        c.indicacao,
+        co.nome AS 'cadastrador',
+        CONCAT(
+            (DAY(c.datacadastro)),
+            '/',
+            (MONTH(c.datacadastro)),
+            '/',
+            (YEAR(c.datacadastro))
+        ) AS 'datacadastro'
+    FROM
+        (
+            (
+                (
+                    (
+                        cliente c
+                    INNER JOIN colaborador co ON
+                        c.idcolcad = co.id
+                    )
+                INNER JOIN processo p ON
+                    c.id = p.idcliente
+                )
+            INNER JOIN adverso a ON
+                p.idadverso = a.id
+            )
+        INNER JOIN ramo r ON
+            r.id = a.id_ramo
+        )
+    INNER JOIN contato con ON
+        con.idcliente = c.id
+    WHERE
+        con.datacontato = CAST(NOW() AS DATE)
+    ORDER BY
+        c.nome;";
+
+        $novaQueryRetornos = 'select c.id as "id",c.nome as "nome", col.nome as "cadastrador", c.datacadastro as "datacadastro" 
+        from (cliente c inner join colaborador col on c.idcolcad = col.id) inner join contato con on con.idcliente = c.id  
+        where con.datacontato = CAST(NOW() AS DATE) order by c.nome;';
+
+        $this->listarResultados($novaQueryRetornos);
     }
 
 
@@ -431,24 +509,24 @@ class Cliente {
 
         //define os nomes das colunas a serem exibidas
         echo '<tr class="tabela-categorias">
-                <td><i class="fas fa-user"></i> Nome</td>
-                <td><i class="fas fa-phone"></i> Telefone</td>
+                <td><i class="fas fa-user"></i> Nome</td>';
+                /*<td><i class="fas fa-phone"></i> Telefone</td>
                 <td><i class="fas fa-mobile-alt"></i> Celular</td>
                 <td><i class="fas fa-map-marked-alt"></i> Período</td>
                 <td><i class="fas fa-angle-down"></i> Adversos</td>
                 <td><i class="fas fa-angle-double-right"></i> Categoria</td>
                 <td><i class="fas fa-address-card"></i> Cargo</td>
-                <td><i class="fas fa-hand-point-right"></i> Indicado de</td>
-                <td><i class="fas"></i> Cadastrado Por </td>
-                <td>Cadastro</td>
+                <td><i class="fas fa-hand-point-right"></i> Indicado de</td>*/
+                echo '<td><i class="fas"></i> Cadastrado Por </td>
+                <td>Cadastrado em</td>
                 <td><i class="fas fa-user-edit"></i> Operações Cliente</td>
             </tr>';
 
         // com o resultado do sql, lista as linhas dos resultados por um loop de repetição
         while ($cont < $total) {
             echo '<tr class="tabela-preenchimento">
-                <td>' . $linha['nome'] . '</td>
-                <td>' . $linha['telefone'] . '</td>
+                <td>' . $linha['nome'] . '</td>';
+                /*<td>' . $linha['telefone'] . '</td>
                 <td>' . $linha['celular'] . '</td>
                 <td>' . $linha['datainiempresa'] . ' - ';
                 
@@ -475,12 +553,11 @@ class Cliente {
                 echo '<td> - - - - - - - - </td>';
             }
 
-
+            */
             echo'<td><strong>' . $linha['cadastrador'] . '</strong></td>    
-                <td>' . $linha['datacadastro'] . '</td>
-                <td> <a href="registra_contato.php?id=' . $linha['id'] . '" > <button class="btn_editar">Contato</button></a>
-                <a href="registra_agendamento.php?id=' . $linha['id'] . '" ><button class="btn_salvar">Agendar</button></a>
-				<!--<a href="Perfil.php?id=' . $linha['id'] . '" ><button class="btn_editar">Editar</button></a>--></td>
+                <td>' . date('d/m/Y H:i:s', strtotime($linha['datacadastro'])) . '</td>
+                <td>
+				<a href="Perfil_cliente.php?id=' . $linha['id'] . '" ><button class="btn_editar cadastro_btn">Perfil</button></a></td>
             </tr>';
 
             $linha = mysqli_fetch_assoc($dados);

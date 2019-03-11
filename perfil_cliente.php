@@ -109,7 +109,7 @@
                     //utf8_decode($query);
 
                     for ($i = 0; $i < $total; $i++) {
-                        echo '<tr><td style="border: 1px solid;">' . utf8_encode($linha['adverso']) . '</td><td style="border: 1px solid;">' . utf8_encode($linha['ramo']) . '</td></tr>';
+                        echo '<tr><td style="border: 1px solid;">' . ($linha['adverso']) . '</td><td style="border: 1px solid;">' . utf8_encode($linha['ramo']) . '</td></tr>';
                         $linha = mysqli_fetch_assoc($dados);
                     }
                     ?>

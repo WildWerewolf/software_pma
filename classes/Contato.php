@@ -186,7 +186,8 @@ class Contato {
         $dados = $cnx->executarQuery($query);
 
 
-        header('Location: listagem_contato.php');
+        //header('Location: listagem_contato.php');
+        header('Location: perfil_cliente.php?id='.$idcliente);
     }
 
     function getIdColaborador() {

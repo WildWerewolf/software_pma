@@ -95,7 +95,7 @@ class Agendamento {
                     echo '<td> - - - - - - - - </td>';
                 }
             
-            echo '<td><button class="btn_editar">Editar</button></td></tr>';
+            //echo '<td><button class="btn_editar">Editar</button></td></tr>';
             
             $linha = mysqli_fetch_assoc($dados);
             $cont++;

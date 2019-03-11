@@ -57,7 +57,8 @@
         require_once 'Classes/cliente.php';
         $cliente = new Cliente();
         
-        $cliente->listarClientes(1);
+        //$cliente->listarClientes(1);
+        $cliente->listagemPrescritos();
         
     
     ?>
@@ -88,7 +89,7 @@
         require_once 'Classes/Cliente.php';
         $cliente = new Cliente();
 
-        $cliente->listarClientes(2);     
+        $cliente->listarRetornos();     
         
     
     ?>
