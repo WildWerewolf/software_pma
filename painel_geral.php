@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -16,18 +15,18 @@
 <body>
     <div class="Site">
         <?php
-            include 'header.php';
-            include 'footer.php';
-                    
+        include 'header.php';
+        include 'footer.php';
+
         ?>
-</div>
+    </div>
     <div class="titulo-secao">
         Início
     </div>
     <div class="container-cadastrar">
         <div class="col-6">
             <a href="cadastrar_cliente.php">
-                <button class="btn_painel_interno"><i class="fa fa-user-plus"></i>Novo<br> Cliente</button>         
+                <button class="btn_painel_interno"><i class="fa fa-user-plus"></i>Novo<br> Cliente</button>
             </a>
         </div>
         <div class="col-6">
@@ -46,55 +45,54 @@
                 <button class="btn_painel_interno"><i class="fa fa-list-ul"></i> Novo<br> Agendamento</button>
             </a>
         </div>-->
-        
+
     </div>
-    
-    <div class="titulo-secao">
-        Próximos Prescritos:
-    </div>
-    
-    <?php
-        require_once 'Classes/cliente.php';
-        $cliente = new Cliente();
-        
-        //$cliente->listarClientes(1);
-        $cliente->listagemPrescritos();
-        
-    
-    ?>
-    
-    <div class="titulo-secao">
-        Agendamentos para Hoje:
-    </div>
-    
-    <?php
-    
-        require_once 'Classes/Agendamento.php';
-        $agendamento = new Agendamento();
-        
-        //session_start();
-        $_SESSION['agDeHJ'] = true;
-        
-        $agendamento->listarAgendados(0, 0);
-        
-    
-    ?>
-    
+
     <div class="titulo-secao">
         Retornos para hoje:
     </div>
 
     <?php
-    
-        require_once 'Classes/Cliente.php';
-        $cliente = new Cliente();
 
-        $cliente->listarRetornos();     
-        
-    
+    require_once 'Classes/Cliente.php';
+    $cliente = new Cliente();
+
+    $cliente->listarRetornos();
+
+
     ?>
-    
-</body></html>
-    
+
+    <div class="titulo-secao">
+        Agendamentos para Hoje:
+    </div>
+
+    <?php
+
+    require_once 'Classes/Agendamento.php';
+    $agendamento = new Agendamento();
+
+    //session_start();
+    $_SESSION['agDeHJ'] = true;
+
+    $agendamento->listarAgendados(0, 0);
 
 
+    ?>
+
+    <div class="titulo-secao">
+        Próximos Prescritos:
+    </div>
+
+    <?php
+    require_once 'Classes/cliente.php';
+    $cliente = new Cliente();
+
+    //$cliente->listarClientes(1);
+    $cliente->listagemPrescritos();
+
+
+    ?>
+
+</body>
+
+</html> 
