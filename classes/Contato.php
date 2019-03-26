@@ -136,11 +136,7 @@ class Contato {
         require_once 'conexao.php';
         $cnx = new conexao();
 
-        $query = ("select concat( "
-                . "(day(cast(cont.data as date))) ,'/', "
-                . "(month(cast(cont.data as date))) ,'/', "
-                . "(year(cast(cont.data as date))), ' - ' ,"
-                . "cast(cont.data as time) ) as 'data' "
+        $query = ("select cont.data as 'data' "
                 . ",obs, cont.status, col.nome "
                 . "from contato cont inner join colaborador col on cont.idcolaborador = col.id "
                 . "where idcliente = " . $idcli . " order by 'data'");
@@ -153,8 +149,10 @@ class Contato {
             echo " <div class='col-6'>";
             while ($cont < $total) {
 
+                // date(d m Y - H:i:s, $linha['data'])
+
                 echo " 
-            <span class='label_cadastro'> Data :" . $linha['data']
+            <span class='label_cadastro'> Data :" . date('d/m/Y - H:i:s', strtotime($linha['data']))
                 . " - " . $this->resolveStatus($linha['status']) . " - Feito por: " . $linha['nome'] . "</span>
             <textarea name='obs' rows='4' cols='50' class='cadastro_input' disabled>" . $linha['obs'] . "</textarea>
         ";
