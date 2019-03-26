@@ -149,7 +149,7 @@ class Contato {
             echo " <div class='col-6'>";
             while ($cont < $total) {
 
-                // date(d m Y - H:i:s, $linha['data'])
+                // date('d/m/Y - H:i:s', strtotime($linha['data']))
 
                 echo " 
             <span class='label_cadastro'> Data :" . date('d/m/Y - H:i:s', strtotime($linha['data']))
@@ -171,9 +171,9 @@ class Contato {
         $status = $formulario['status'];
         $obs = $formulario['obs'];
 
-        if (isset($formulario['datacontato'])) {
+        if (!empty($formulario['datacontato'])) {
             $dataContato = "'" . $formulario['datacontato'] . "'";
-            echo $formulario['datacontato'];
+            //echo $formulario['datacontato'];
         } else {
             $dataContato = 'null';
         }
