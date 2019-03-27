@@ -169,7 +169,7 @@ class Totais
 
 
         //montando a tabela a partir daqui
-            echo '<strong> ' . $this->resolveMes($mes) . '</strong>';
+            echo '<div class="container-div"><strong> ' . $this->resolveMes($mes) . '</strong>';
 
             echo '<br><br><table>';
 
@@ -184,7 +184,11 @@ class Totais
             $cont++;
             }
 
-        echo '</table>';
+        echo '</table>
+        <div style="float: left;" class="container-div">
+            <a href="contatos_totais.php">
+                <button class="cadastro_cadastrar cadastro_btn">zerar</button></a>
+        </div>';
 
     }
 
@@ -192,8 +196,8 @@ class Totais
      * Constroi uma tabela mostrando os colaboradores e o total de contatos feitos por ele. 
      * Considera-se o status do contato e os últimos 5 dias
      */
-    public function resultadosDaSemana($semana, $statusContato)
-    { //echo $statusContato;
+    public function resultadosDaSemana($semana, $statusContato){ 
+        //echo $statusContato;
         
         $dados = $this->obterColaboradores();
 
@@ -209,7 +213,7 @@ class Totais
         echo '<br><br><table>';
 
         echo '<tr> <td> <strong>Colaborador</strong> </td>';
-        
+      
 
         if($semana == true){
 
@@ -234,12 +238,19 @@ class Totais
              * --Rubens
              */
             header("Location: bucha.php?erro=0");
-    }
+            }
             
 
             
 
-        echo '</table>';
+        echo '</table>
+        
+        <div class="container-div">
+            <a href="contatos_totais.php">
+                <button class="cadastro_cadastrar cadastro_btn">zerar</button></a>
+        </div>
+        
+        </div>';
 
     }
 }

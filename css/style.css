@@ -1,614 +1,622 @@
 @media screen and (min-device-width: 0px) and (max-device-width: 319px) {
-    .Area_Login{
-        width: calc(100% - 40px);
-    }
+  .Area_Login {
+    width: calc(100% - 40px);
+  }
 
-    .col-1{
-        width: 100%;
-    }
+  .col-1 {
+    width: 100%;
+  }
 
-    .col-2{
-        width: 100%;
-    }
+  .col-2 {
+    width: 100%;
+  }
 
-    .col-3{
-        width: 100%;
-    }
+  .col-3 {
+    width: 100%;
+  }
 
-    .col-4{
-        width: 100%;
-    }
+  .col-4 {
+    width: 100%;
+  }
 
-    .col-5{
-        width: 100%;
-    }
+  .col-5 {
+    width: 100%;
+  }
 
-    .col-6{
-        width: 100%;
-    }
+  .col-6 {
+    width: 100%;
+  }
 
-    .col-7{
-        width: 100%;
-    }
+  .col-7 {
+    width: 100%;
+  }
 
-    .col-8{
-        width: 100%;
-    }
+  .col-8 {
+    width: 100%;
+  }
 
-    .col-9{
-        width: 100%;
-    }
+  .col-9 {
+    width: 100%;
+  }
 
-    .col-10{
-        width: 100%;
-    }
+  .col-10 {
+    width: 100%;
+  }
 
-    .col-11{
-        width: 100%;
-    }
+  .col-11 {
+    width: 100%;
+  }
 
-    .col-12{
-        width: 100%;
-    }
+  .col-12 {
+    width: 100%;
+  }
 }
 @media screen and (min-device-width: 320px) and (max-device-width: 479px) {
-    .Area_Login{
-        width: calc(100% - 40px);
-    }
+  .Area_Login {
+    width: calc(100% - 40px);
+  }
 
-    .col-1{
-        width: 100%;
-    }
+  .col-1 {
+    width: 100%;
+  }
 
-    .col-2{
-        width: 100%;
-    }
+  .col-2 {
+    width: 100%;
+  }
 
-    .col-3{
-        width: 100%;
-    }
+  .col-3 {
+    width: 100%;
+  }
 
-    .col-4{
-        width: 100%;
-    }
+  .col-4 {
+    width: 100%;
+  }
 
-    .col-5{
-        width: 100%;
-    }
+  .col-5 {
+    width: 100%;
+  }
 
-    .col-6{
-        width: 100%;
-    }
+  .col-6 {
+    width: 100%;
+  }
 
-    .col-7{
-        width: 100%;
-    }
+  .col-7 {
+    width: 100%;
+  }
 
-    .col-8{
-        width: 100%;
-    }
+  .col-8 {
+    width: 100%;
+  }
 
-    .col-9{
-        width: 100%;
-    }
+  .col-9 {
+    width: 100%;
+  }
 
-    .col-10{
-        width: 100%;
-    }
+  .col-10 {
+    width: 100%;
+  }
 
-    .col-11{
-        width: 100%;
-    }
+  .col-11 {
+    width: 100%;
+  }
 
-    .col-12{
-        width: 100%;
-    }
+  .col-12 {
+    width: 100%;
+  }
 }
 @media screen and (min-device-width: 480px) and (max-device-width: 639px) {
-    .Area_Login{
-        width: calc(100% - 40px);
-    }
+  .Area_Login {
+    width: calc(100% - 40px);
+  }
 
-    .col-1{
-        width: 100%;
-    }
+  .col-1 {
+    width: 100%;
+  }
 
-    .col-2{
-        width: 100%;
-    }
+  .col-2 {
+    width: 100%;
+  }
 
-    .col-3{
-        width: 100%;
-    }
+  .col-3 {
+    width: 100%;
+  }
 
-    .col-4{
-        width: 100%;
-    }
+  .col-4 {
+    width: 100%;
+  }
 
-    .col-5{
-        width: 100%;
-    }
+  .col-5 {
+    width: 100%;
+  }
 
-    .col-6{
-        width: 100%;
-    }
+  .col-6 {
+    width: 100%;
+  }
 
-    .col-7{
-        width: 100%;
-    }
+  .col-7 {
+    width: 100%;
+  }
 
-    .col-8{
-        width: 100%;
-    }
+  .col-8 {
+    width: 100%;
+  }
 
-    .col-9{
-        width: 100%;
-    }
+  .col-9 {
+    width: 100%;
+  }
 
-    .col-10{
-        width: 100%;
-    }
+  .col-10 {
+    width: 100%;
+  }
 
-    .col-11{
-        width: 100%;
-    }
+  .col-11 {
+    width: 100%;
+  }
 
-    .col-12{
-        width: 100%;
-    }
+  .col-12 {
+    width: 100%;
+  }
 }
 @media screen and (min-device-width: 640px) and (max-device-width: 839px) {
-    .Area_Login{
-        width: calc(100% - 40px);
-    }
+  .Area_Login {
+    width: calc(100% - 40px);
+  }
 
-    .col-1{
-        width: 8.3%;
-    }
+  .col-1 {
+    width: 8.3%;
+  }
 
-    .col-2{
-        width: 16.6%;
-    }
+  .col-2 {
+    width: 16.6%;
+  }
 
-    .col-3{
-        width: 24.9%;
-    }
+  .col-3 {
+    width: 24.9%;
+  }
 
-    .col-4{
-        width: 33.2%;
-    }
+  .col-4 {
+    width: 33.2%;
+  }
 
-    .col-5{
-        width: 41.5%;
-    }
+  .col-5 {
+    width: 41.5%;
+  }
 
-    .col-6{
-        width: 49.8%;
-    }
+  .col-6 {
+    width: 49.8%;
+  }
 
-    .col-7{
-        width: 58.1%;
-    }
+  .col-7 {
+    width: 58.1%;
+  }
 
-    .col-8{
-        width: 66.4%;
-    }
+  .col-8 {
+    width: 66.4%;
+  }
 
-    .col-9{
-        width: 74.7%;
-    }
+  .col-9 {
+    width: 74.7%;
+  }
 
-    .col-10{
-        width: 83%;
-    }
+  .col-10 {
+    width: 83%;
+  }
 
-    .col-11{
-        width: 91.3%;
-    }
+  .col-11 {
+    width: 91.3%;
+  }
 
-    .col-12{
-        width: 100%;
-    }
-}
-@media screen and (min-device-width: 840px){
-    .Area_Login{
-        width: calc(430px - 40px);
-    }
-
-    .col-1{
-        width: 8%;
-    }
-
-    .col-2{
-        width: 16%;
-    }
-
-    .col-3{
-        width: 24%;
-    }
-
-    .col-4{
-        width: 32%;
-    }
-
-    .col-5{
-        width: 41%;
-    }
-
-    .col-6{
-        width: 49%;
-    }
-
-    .col-7{
-        width: 58.1%;
-    }
-
-    .col-8{
-        width: 66.4%;
-    }
-
-    .col-9{
-        width: 74%;
-    }
-
-    .col-10{
-        width: 82%;
-    }
-
-    .col-11{
-        width: 91%;
-    }
-
-    .col-12{
-        width: 100%;
-    }
-}
-
-@import url('../fonts/Hind-Regular.ttf');
-
-
-
-body{
-    font-family: 'Hind', sans-serif;
-    margin: 0 auto;
-    overflow-x: hidden;
-}
-
-a{
-    text-decoration: none;
-}
-
-.Site{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.Body_Index{
-    background-image: url('../img/background-index.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.Area_Login{
-    background-color: #fff;
-    padding: 20px;
-    height: calc(100vh - 40px);
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.Item_Logotipo_Area_Login{
-       
-}
-
-.Logotipo_Area_Login{
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-}
-
-.Frase_Bemvindo_Area_Login{
-    font-size: 25px;
-    padding-top: 30px;
-    border-bottom: 1px solid #c3c3c3;
-    padding-bottom: 30px;
-    text-align: center;
-    font-weight: 600;
-    color: #232e33;
-}
-
-.Formulario_login_container{
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-}
-
-.Formulario_Login_Label{
-    font-weight: 800;
-    padding-bottom: 5px;
-    font-size: 15px;
-    text-transform: uppercase;
-    color: #4c4c4c;
-}
-
-.Senha_Login{
-    padding-top: 30px;
-}
-
-.Formulario_Login_Input{
-    padding: 13px;
-    outline: none;
-    width: calc(100% - 26px;);
-    font-size: 12px;
-    background-color: #f1f1f1;
-    border: none;
-    border-radius: 50px;
-}
-
-.Btn_Formulario_Login{
+  .col-12 {
     width: 100%;
-    color: #fff;
-    background-color: #bc1717;
-    font-weight: 600;
-    padding: 8px;
-    border: none;
-    border-radius: 60px;
-    font-family: hind;
-    font-size: 20px;
-    margin-top: 40px;
-    cursor: pointer;
-    border: 1px solid #bc1717;
-    outline: none;
+  }
 }
+@media screen and (min-device-width: 840px) {
+  .Area_Login {
+    width: calc(430px - 40px);
+  }
 
-.Btn_Formulario_Login:hover{
-    background-color: #fff;
-    border: 1px solid #bc1717;
-    color: #bc1717;
-    -webkit-transition: 0.2s ease-in;
-    -moz-transition: 0.2s ease-in; 
-    -o-transition: 0.2s ease-in;
-}
+  .col-1 {
+    width: 8%;
+  }
 
-.Form_Lembrar{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 20px;
-}
+  .col-2 {
+    width: 16%;
+  }
 
-.Form_Lembrar_checkbox{
-    background-color: #fff;
-    border: none;
-}
+  .col-3 {
+    width: 24%;
+  }
 
-.Form_Lembrar_label{
-    font-size: 13px;
-}
+  .col-4 {
+    width: 32%;
+  }
 
-.header{
+  .col-5 {
+    width: 41%;
+  }
+
+  .col-6 {
+    width: 49%;
+  }
+
+  .col-7 {
+    width: 58.1%;
+  }
+
+  .col-8 {
+    width: 66.4%;
+  }
+
+  .col-9 {
+    width: 74%;
+  }
+
+  .col-10 {
+    width: 82%;
+  }
+
+  .col-11 {
+    width: 91%;
+  }
+
+  .col-12 {
     width: 100%;
-    height: 130px;
-    background-color: #fff;
-    box-shadow: 0px 1px 15px 2px #efefef;
-    display: flex;
-    padding-left: 50px;
-    padding-right: 50px;
-    align-items: center;
+  }
 }
 
-.Logotipo_Header img{
-    width: 130px;
+@import url("../fonts/Hind-Regular.ttf");
+
+body {
+  font-family: "Hind", sans-serif;
+  margin: 0 auto;
+  overflow-x: hidden;
 }
 
-.menu_header ul{
-    display: flex;
-    justify-content: space-between;
-    list-style-type: none;
+a {
+  text-decoration: none;
 }
 
-.menu_header ul li{
-    font-weight: 600;
-    color: #797777;
-    text-transform: uppercase;
+.Site {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
-.menu_header ul li a{
-    color: #797777;
-    text-decoration: none;
+.Body_Index {
+  background-image: url("../img/background-index.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-.menu_header ul li a:hover{
-    color: #bc1717;
-    border-top: solid 2px #f1f1f1;
-    border-bottom: solid 2px #f1f1f1;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    -webkit-transition: 0.2s ease-in;
-    -moz-transition: 0.2s ease-in; 
-    -o-transition: 0.2s ease-in;
+.Area_Login {
+  background-color: #fff;
+  padding: 20px;
+  height: calc(100vh - 40px);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.header_sair{
-    background-color: #bc1717;
-    color: #fff;
-    margin-left: 20px;
-    padding: 5px 20px 5px 20px;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-weight: 600;
+.Item_Logotipo_Area_Login {
 }
 
-.header_sair:hover{
-    -webkit-transition: 0.2s ease-in;
-    -moz-transition: 0.2s ease-in; 
-    -o-transition: 0.2s ease-in;
-    background-color: #9c1515;
+.Logotipo_Area_Login {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
 }
 
-.tabela-borda td{
-    border: 1px solid #ececec;
+.Frase_Bemvindo_Area_Login {
+  font-size: 25px;
+  padding-top: 30px;
+  border-bottom: 1px solid #c3c3c3;
+  padding-bottom: 30px;
+  text-align: center;
+  font-weight: 600;
+  color: #232e33;
 }
 
-.checkbox_admin{
-    font-size: 14px;
-    font-weight: 600;
+.Formulario_login_container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
-.titulo-secao{
-    text-align: center;
-    margin-top: 34px;
-    text-transform: uppercase;
-    font-size: 31px;
-    font-weight: 600;
-    color: #636363;
+.Formulario_Login_Label {
+  font-weight: 800;
+  padding-bottom: 5px;
+  font-size: 15px;
+  text-transform: uppercase;
+  color: #4c4c4c;
 }
 
-.container-tabela{
-    padding-top: 20px;
-    /*width: 1024px;
+.Senha_Login {
+  padding-top: 30px;
+}
+
+.Formulario_Login_Input {
+  padding: 13px;
+  outline: none;
+  width: calc(100% - 26px;);
+  font-size: 12px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 50px;
+}
+
+.Btn_Formulario_Login {
+  width: 100%;
+  color: #fff;
+  background-color: #bc1717;
+  font-weight: 600;
+  padding: 8px;
+  border: none;
+  border-radius: 60px;
+  font-family: hind;
+  font-size: 20px;
+  margin-top: 40px;
+  cursor: pointer;
+  border: 1px solid #bc1717;
+  outline: none;
+}
+
+.Btn_Formulario_Login:hover {
+  background-color: #fff;
+  border: 1px solid #bc1717;
+  color: #bc1717;
+  -webkit-transition: 0.2s ease-in;
+  -moz-transition: 0.2s ease-in;
+  -o-transition: 0.2s ease-in;
+}
+
+.Form_Lembrar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.Form_Lembrar_checkbox {
+  background-color: #fff;
+  border: none;
+}
+
+.Form_Lembrar_label {
+  font-size: 13px;
+}
+
+.header {
+  width: 100%;
+  height: 130px;
+  background-color: #fff;
+  box-shadow: 0px 1px 15px 2px #efefef;
+  display: flex;
+  padding-left: 50px;
+  padding-right: 50px;
+  align-items: center;
+}
+
+.Logotipo_Header img {
+  width: 130px;
+}
+
+.menu_header ul {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.menu_header ul li {
+  font-weight: 600;
+  color: #797777;
+  text-transform: uppercase;
+}
+
+.menu_header ul li a {
+  color: #797777;
+  text-decoration: none;
+}
+
+.menu_header ul li a:hover {
+  color: #bc1717;
+  border-top: solid 2px #f1f1f1;
+  border-bottom: solid 2px #f1f1f1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  -webkit-transition: 0.2s ease-in;
+  -moz-transition: 0.2s ease-in;
+  -o-transition: 0.2s ease-in;
+}
+
+.header_sair {
+  background-color: #bc1717;
+  color: #fff;
+  margin-left: 20px;
+  padding: 5px 20px 5px 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.header_sair:hover {
+  -webkit-transition: 0.2s ease-in;
+  -moz-transition: 0.2s ease-in;
+  -o-transition: 0.2s ease-in;
+  background-color: #9c1515;
+}
+
+.tabela-borda td {
+  border: 1px solid #ececec;
+}
+
+.checkbox_admin {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.titulo-secao {
+  text-align: center;
+  margin-top: 34px;
+  text-transform: uppercase;
+  font-size: 31px;
+  font-weight: 600;
+  color: #636363;
+}
+
+.container-tabela {
+  padding-top: 20px;
+  /*width: 1024px;
     margin: 0 auto;*/
 }
 
-.container-datas{
-    display: flex;
-    justify-content: space-between;
-    width: 33%;
-    margin-top: 24px;
-    margin: 0 auto;
-    flex-wrap: wrap;
+.container-datas {
+  display: flex;
+  justify-content: space-between;
+  width: 33%;
+  margin-top: 24px;
+  margin: 0 auto;
+  flex-wrap: wrap;
 }
 
-.container-cadastrar{
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-    margin-top: 24px;
-    margin: 0 auto;
-    flex-wrap: wrap;
+.container-cadastrar {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-top: 24px;
+  margin: 0 auto;
+  flex-wrap: wrap;
 }
 
-table tbody tr:nth-child(2n+1) {
-    background:#f9f9f9;    
+table tbody tr:nth-child(2n + 1) {
+  background: #f9f9f9;
 }
 
-.cadastro_input{
-    background-color: #f1f1f1;
-    border: none;
-    padding: 15px;
-    border-radius: 5px;
-    width: calc(100% - 30px);
-    margin-bottom: 30px;
-    -webkit-transition: 0.2s ease-in;
-    -moz-transition: 0.2s ease-in; 
-    -o-transition: 0.2s ease-in;
+.cadastro_input {
+  background-color: #f1f1f1;
+  border: none;
+  padding: 15px;
+  border-radius: 5px;
+  width: calc(100% - 30px);
+  margin-bottom: 30px;
+  -webkit-transition: 0.2s ease-in;
+  -moz-transition: 0.2s ease-in;
+  -o-transition: 0.2s ease-in;
 }
 
-.btn_painel_interno{
-    border-radius: 10px;
-    margin: 0 auto;
-    background-color: #9c1515;
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    outline: none;  
-    border: none;
-    padding: 40px;
-    font-weight: 500;
-    font-size: 16px;
-    flex-direction: column;
-    text-transform: uppercase;
+.container-div {
+  /*width: 100vw;
+    height: 100vh;
+    background: #6C7A89;*/
+  display: flex;
+  /*flex-direction: row;*/
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.creditos_rads{
-    width: 150px;
-    margin-left: 20px;
-    color: #fff;
-    font-weight: 500;
+.btn_painel_interno {
+  border-radius: 10px;
+  margin: 0 auto;
+  background-color: #9c1515;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  border: none;
+  padding: 40px;
+  font-weight: 500;
+  font-size: 16px;
+  flex-direction: column;
+  text-transform: uppercase;
 }
 
-.creditos_rads img{
-    width: 100%;
+.creditos_rads {
+  width: 150px;
+  margin-left: 20px;
+  color: #fff;
+  font-weight: 500;
 }
 
-.btn_painel_interno:hover{
-    background-color: #fff;
-    background-color: #fff;
-    border: 1px solid #9c1515;
-    color: #9c1515;
-    -webkit-transition: 0.1s ease-in;
-    -moz-transition: 0.1s ease-in; 
-    -o-transition: 0.1s ease-in;
+.creditos_rads img {
+  width: 100%;
 }
 
-.cadastro_input:focus{
-    -webkit-transition: 0.2s ease-in;
-    -moz-transition: 0.2s ease-in; 
-    -o-transition: 0.2s ease-in;
-    outline: none;
-    box-shadow: 0px 3px 9px 0px #e6e5e5;
+.btn_painel_interno:hover {
+  background-color: #fff;
+  background-color: #fff;
+  border: 1px solid #9c1515;
+  color: #9c1515;
+  -webkit-transition: 0.1s ease-in;
+  -moz-transition: 0.1s ease-in;
+  -o-transition: 0.1s ease-in;
 }
 
-.tabela-categorias{
-    background-color: #e0dfdf!important;
-    font-weight: 600;
-    white-space: nowrap;
-    color: #555;
+.cadastro_input:focus {
+  -webkit-transition: 0.2s ease-in;
+  -moz-transition: 0.2s ease-in;
+  -o-transition: 0.2s ease-in;
+  outline: none;
+  box-shadow: 0px 3px 9px 0px #e6e5e5;
 }
 
-.label_cadastro{
-    font-weight: 600;
-    color: #636363;
-    display: flex;
+.tabela-categorias {
+  background-color: #e0dfdf !important;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #555;
 }
 
-.btn_editar{
-    background-color: #31c797;
-    border: none;
-    color: #fff;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 5px;
-    font-size: 10px;
-    border-radius: 4px;
-    cursor: pointer;
+.label_cadastro {
+  font-weight: 600;
+  color: #636363;
+  display: flex;
 }
 
-.btn_salvar{
-    margin-left: 10px;
-    background-color: #6f82de;
-    border: none;
-    color: #fff;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 5px;
-    font-size: 10px;
-    border-radius: 4px;
-    cursor: pointer;
+.btn_editar {
+  background-color: #31c797;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 5px;
+  font-size: 10px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.cadastro_cancelar{
-    background-color: #888888;
-    color: #ffffff;
+.btn_salvar {
+  margin-left: 10px;
+  background-color: #6f82de;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 5px;
+  font-size: 10px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.cadastro_cadastrar{
-    background-color: #5ba3d6;
-    color: #fff;
+.cadastro_cancelar {
+  background-color: #888888;
+  color: #ffffff;
 }
 
-.cadastro_btn{
-    outline: none;
-    cursor: pointer;
-    font-size: 12px;
-    width: 100%;
-    border: none;
-    border-radius: 7px;
-    padding: 15px;
-    font-weight: 600;
-    text-transform: uppercase;
+.cadastro_cadastrar {
+  background-color: #5ba3d6;
+  color: #fff;
+}
+
+.cadastro_btn {
+  outline: none;
+  cursor: pointer;
+  font-size: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 7px;
+  padding: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
 }
