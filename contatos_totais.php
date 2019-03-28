@@ -142,8 +142,8 @@
                 //ideia para classe de erro - chamada
                 echo $erro;
             }
-        } else { // se $_GET['erro'] estiver setado, escreve uma mensagem de erro
-            if (isset($_GET['erro'])) {
+        } else { 
+            if (isset($_GET['erro'])) {// se $_GET['erro'] estiver setado, escreve uma mensagem de erro
                 //ideia para classe de erro - chamada
                 echo $erro;
             }
