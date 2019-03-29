@@ -30,9 +30,11 @@ class Totais
         }
     }
 
-    //recebe o id do colaborador e o status de contato para se contar os contatos do colaborador informado
-    //retorna o total de contatos com o status recebido durante os últimos 5 dias(dia atual incluso)
-    // não separa dia útil de dia não trabalhado. Só considera os 5 últimos dias sem diferenciá-los
+    /**
+     * recebe o id do colaborador e o status de contato para se contar os contatos do colaborador informado
+     * retorna o total de contatos com o status recebido durante os últimos 5 dias(dia atual incluso)
+     * não separa dia útil de dia não trabalhado. Só considera os 5 últimos dias sem diferenciá-los
+     */
     private function contatosDoColaboradorSemana($id,$statusContato)
     {
         $this->instanciaCnx();
@@ -62,8 +64,10 @@ class Totais
           return $linha['total'];
     }
 
-    //recebe o id do colaborador,o mes, o ano e o status de contato para se contar os contatos do colaborador informado
-    //retorna o total de contatos com o status recebido durante o mes e ano especificado
+    /**
+     * recebe o id do colaborador,o mes, o ano e o status de contato para se contar os contatos do colaborador informado.
+     * Retorna o total de contatos com o status recebido durante o mes e ano especificado
+     */
     private function contatosDoColaboradorPeriodo($id, $mes, $ano, $statusContato)
     {
         $this->instanciaCnx();
@@ -153,6 +157,8 @@ class Totais
     }
 
 
+
+
     /**
      * Constroi uma tabela mostrando os colaboradores e o total de contatos feitos por ele. 
      * Considera-se o mes, o ano e o status do contato
@@ -169,11 +175,17 @@ class Totais
 
 
         //montando a tabela a partir daqui
-            echo '<div class="container-div"><strong> ' . $this->resolveMes($mes) . '</strong>';
+            echo ' <div class="titulo-secao">
+       
+             ' . $this->resolveMes($mes) .
 
-            echo '<br><br><table>';
+              '</div>';
 
-            echo '<tr> <td> <strong>Colaborador</strong> </td>';
+            echo '  <div class="tabela_listagem_clientes container-tabela" style="padding:2%">
+        <table cellpadding="6" cellspacing="0" border="0" class="tabela-borda" width="100%">';
+
+            echo '<tr class="tabela-categorias"> <td> <strong>Colaborador</strong> </td>
+                     <td> <strong>Total</strong> </td>';
 
             while ($cont < $total) {
 
@@ -185,15 +197,14 @@ class Totais
             }
 
         echo '</table>
-        <div style="float: left;" class="container-div">
-            <a href="contatos_totais.php">
-                <button class="cadastro_cadastrar cadastro_btn">zerar</button></a>
-        </div>';
+        </div>
+        </div>
+       ';
 
     }
 
     /**
-     * Constroi uma tabela mostrando os colaboradores e o total de contatos feitos por ele. 
+     * Constroi uma tabela mostrando os colaboradores e o total de feitos por ele. 
      * Considera-se o status do contato e os últimos 5 dias
      */
     public function resultadosDaSemana($semana, $statusContato){ 
@@ -208,11 +219,12 @@ class Totais
         $cont = 0;
 
         //montando a tabela a partir daqui
-        echo '<strong> Últimos 5 dias </strong>';
+        echo ' <div class="titulo-secao"> Últimos 5 dias </div>';
 
-        echo '<br><br><table>';
+        echo ' <div class="tabela_listagem_clientes container-tabela" style="padding:2%">
+        <table cellpadding="6" cellspacing="0" border="0" class="tabela-borda" width="100%">';
 
-        echo '<tr> <td> <strong>Colaborador</strong> </td>';
+        echo '<tr  class="tabela-categorias"> <td> <strong>Colaborador</strong> </td>';
       
 
         if($semana == true){
@@ -225,6 +237,11 @@ class Totais
             $linha = mysqli_fetch_assoc($dados);
             $cont++;
             } 
+
+            echo '</table>
+        </div>
+        </div>
+       ';
 
             //echo date('z', time('2019-03-24 22:39:54'));
             

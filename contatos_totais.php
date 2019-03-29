@@ -28,19 +28,20 @@
 
     </div>
 
-    <div class='col-12'>
+    <div class="col-12">
         <div class="titulo-secao">
             Contatos Totais de Colaborador
         </div>
         <br>
-        <div class="container-div col-6">
+          <div class="container-cadastrar">
+        <div class="col-6">
             <form method='POST' action="contatos_totais.php?acao=true">
 
 
                 <span class="label_cadastro">Mês:</span>
                 <select name="mes" class="cadastro_input">
                     <option value="">Selecione o mês</option>
-                    <option value="1">Janeiro</option>
+                    <option value="1" >Janeiro</option>
                     <option value="2">Fevereiro</option>
                     <option value="3">Março</option>
                     <option value="4">Abril</option>
@@ -53,20 +54,18 @@
                     <option value="11">Novembro</option>
                     <option value="12">Dezembro</option>
                 </select>
-
+                </div>
+                <div class="col-6">
                 <span class="label_cadastro">Ano:</span>
                 <select name="ano" class="cadastro_input">
                     <option value="">Selecione o ano</option>
                     <option value="2018">2018</option>
                     <option value="2019">2019</option>
                 </select>
+                </div>
+               
 
-                <div class="Form_Lembrar">
-                    <input type="checkbox" name="semana" value="true" class="Form_Lembrar_checkbox">
-                    <span class="Form_Lembrar_label">Últimos 5 dias</span>
-
-                </div><br><br><br>
-
+                     <div class="col-6">
                 <span class="label_cadastro">Qual status?</span>
                 <select name="statusContato" class="cadastro_input">
                     <option value="">Todos</option>
@@ -88,12 +87,21 @@
                     <option value="15">Não Compareceu</option>
                 </select>
 
+                </div>
 
+                 <div class="col-6">
+                <div class="Form_Lembrar">
+                    <input type="checkbox" name="semana" value="true" class="Form_Lembrar_checkbox">
+                    <span class="Form_Lembrar_label">Últimos 5 dias</span>
+                   
+                </div><br><br><br>
+                     </div>
 
-
+                <div class="col-12">
                 <button type="submit" class="cadastro_cadastrar cadastro_btn" placeholder="Digite o nome do cliente"
-                    id="btn_submit">contar</button>
+                    id="btn_submit">Exibir</button>
                 <br><br>
+                </div>
 
             </form>
 
@@ -106,7 +114,7 @@
 
 
 
-        <div class="container-div col-6">
+        <div class="containertb-div col-12">
 
 
             <?php

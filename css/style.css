@@ -513,6 +513,16 @@ table tbody tr:nth-child(2n + 1) {
   align-items: center;
   margin-bottom: 10px;
 }
+.containertb-div {
+  /*width: 100vw;
+    height: 100vh;
+    background: #6C7A89;*/
+  
+  /*flex-direction: row;*/
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
 .btn_painel_interno {
   border-radius: 10px;
