@@ -91,10 +91,12 @@ class Contato {
     }
 
     /**
-     * recebe um número de status de 0 a 17 (escrito em 30/03/2019) e retorna o nome do status informado.
-     * Como default, retorna a palavra Todos. Isso devev ser usado quando todos os contatos forem selecionado para alguma ação no sistema.
+     * Recebe um número de status de 0 a 17 (escrito em 30/03/2019) e retorna o nome do status informado.
+     * Como default, retorna a palavra Todos. Isso deve ser usado quando todos os contatos forem selecionados para alguma ação no sistema.
      * 
      * Caso haja a necessidade de adicionar mais um status, é só adicionar um case ao final dos cases e antes do default.
+     * 
+     * Deve ser atualizado junto com geraSelectStatus para manter o sistema atualizado tanto em saída quanto entrada.
      * 
      * --Rubens
      */
@@ -123,51 +125,12 @@ class Contato {
         }
     }
 
-    /*
-    public function resolveStatus($status) {
-        if ($status == 0) {
-            return 'Agendado';
-        } elseif ($status == 1) {
-            return 'Não atendido';
-        } elseif ($status == 2) {
-            return 'Não Interessado';
-        } elseif ($status == 3) {
-            return 'Número Errado';
-        } elseif ($status == 4) {
-            return 'Prescrito';
-        } elseif ($status == 5) {
-            return 'Possui Processo Ativo';
-        } elseif ($status == 6) {
-            return 'Reconquista';
-        } elseif ($status == 7) {
-            return 'Interessado';
-        } elseif ($status == 8) {
-            return 'Caixa Postal';
-        } elseif ($status == 9) {
-            return 'Atendido/Firmado';
-        } elseif ($status == 10) {
-            return 'Atendido/Não Firmado';
-        } elseif ($status == 11) {
-            return 'Atendeu e Desligou';
-        } elseif ($status == 12) {
-            return 'Reagendado';
-        } elseif ($status == 13) {
-            return 'Atendeu';
-        } elseif ($status == 14) {
-            return 'Agendamento Confirmado';
-        } elseif ($status == 15) {
-            return 'Não Compareceu';
-        } elseif ($status == 16){
-            return 'Em Andamento';
-        }else{
-            return 'Pendências';
-        }
-    }
-    */
-
-    // método para fazer a listagem das observações  
-    //  anteriores na tela de registro de contato
-    public function obterStatusAnteriores($idcli) {
+    /**
+     * método para fazer a listagem das observações anteriores na tela de registro de contato
+     * 
+     * --Rubens
+     */
+        public function obterStatusAnteriores($idcli) {
         require_once 'conexao.php';
         $cnx = new conexao();
 
@@ -199,6 +162,7 @@ class Contato {
         }
     }
 
+
     public function criarContatos($formulario) {
 
         $idcolaborador = $_SESSION['idcolaborador'];
@@ -227,6 +191,16 @@ class Contato {
         header('Location: perfil_cliente.php?id='.$idcliente);
     }
 
+    /**
+     * Retorna o <select> para seleção dos status do contato.
+     * Deve ser usado dentro de um <form> para ser usado de forma certa e gerar a variável status no formulário.
+     * 
+     * Caso haja a necessidade de adicionar mais um status, é só adicionar um <option> com o novo status depois do último <option>.
+     * 
+     * Deve ser atualizado junto com resolveStatus para manter o sistema atualizado tanto em saída quanto entrada.
+     * 
+     * --Rubens
+     */
     public function geraSelectStatus(){
         echo '<span class="label_cadastro">Status:</span>
         <select name="status" class="cadastro_input" required>
