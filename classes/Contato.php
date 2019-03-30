@@ -90,6 +90,40 @@ class Contato {
         $cnx = null;
     }
 
+    /**
+     * recebe um número de status de 0 a 17 (escrito em 30/03/2019) e retorna o nome do status informado.
+     * Como default, retorna a palavra Todos. Isso devev ser usado quando todos os contatos forem selecionado para alguma ação no sistema.
+     * 
+     * Caso haja a necessidade de adicionar mais um status, é só adicionar um case ao final dos cases e antes do default.
+     * 
+     * --Rubens
+     */
+    public function resolveStatus($status){
+        switch ($status){
+            case 0 : return 'Agendado'; break;
+            case 1 : return 'Não atendido'; break;
+            case 2 : return 'Não Interessado'; break;
+            case 3 : return 'Número Errado'; break;
+            case 4 : return 'Prescrito'; break;
+            case 5 : return 'Possui Processo Ativo'; break;
+            case 6 : return 'Reconquista'; break;
+            case 7 : return 'Interessado'; break;
+            case 8 : return 'Caixa Postal'; break;
+            case 9 : return 'Atendido/Firmado'; break;
+            case 10 : return 'Atendido/Não Firmado'; break;
+            case 11 : return 'Atendeu e Desligou'; break;
+            case 12 : return 'Reagendado'; break;
+            case 13 : return 'Atendeu'; break;
+            case 14 : return 'Agendamento Confirmado'; break;
+            case 15 : return 'Não Compareceu'; break;
+            case 16 : return 'Em Andamento'; break;
+            case 17 : return 'Pendências'; break;
+            default : return 'Todos'; break;
+
+        }
+    }
+
+    /*
     public function resolveStatus($status) {
         if ($status == 0) {
             return 'Agendado';
@@ -129,6 +163,7 @@ class Contato {
             return 'Pendências';
         }
     }
+    */
 
     // método para fazer a listagem das observações  
     //  anteriores na tela de registro de contato
@@ -190,6 +225,32 @@ class Contato {
 
         //header('Location: listagem_contato.php');
         header('Location: perfil_cliente.php?id='.$idcliente);
+    }
+
+    public function geraSelectStatus(){
+        echo '<span class="label_cadastro">Status:</span>
+        <select name="status" class="cadastro_input" required>
+            <option value="">Como foi o contato?</option>
+            <option value="0">Agendado</option>
+            <option value="1">Não atendido</option>
+            <option value="2">Não interessado</option>
+            <option value="3">Número Errado</option>
+            <option value="4">Prescrito</option>
+            <option value="5">Possui Processo Ativo</option>
+            <option value="6">Reconquista</option>
+            <option value="7">Interessado</option>
+            <option value="8">Caixa Postal</option>
+            <option value="9">Atendido/Firmado</option>
+            <option value="10">Atendido/Não Firmado</option>
+            <option value="11">Atendeu e Desligou</option>
+            <option value="12">Reagendado</option>
+            <option value="13">Atendeu</option>
+            <option value="14">Agendamento Confirmado</option>
+            <option value="15">Não Compareceu</option>
+            <option value="16">Em Andamento</option>
+            <option value="17">Pendências</option>
+            
+        </select>';
     }
 
     function getIdColaborador() {

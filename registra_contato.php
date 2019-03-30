@@ -67,29 +67,12 @@
             
             ?>
             
-            <span class="label_cadastro">Status:</span>
-            <select name="status" class="cadastro_input" required>
-                <option value="">Como foi o contato?</option>
-                <option value="0">Agendado</option>
-                <option value="1">Não atendido</option>
-                <option value="2">Não interessado</option>
-                <option value="3">Número Errado</option>
-                <option value="4">Prescrito</option>
-                <option value="5">Possui Processo Ativo</option>
-				<option value="6">Reconquista</option>
-				<option value="7">Interessado</option>
-				<option value="8">Caixa Postal</option>
-				<option value="9">Atendido/Firmado</option>
-				<option value="10">Atendido/Não Firmado</option>
-				<option value="11">Atendeu e Desligou</option>
-				<option value="12">Reagendado</option>
-				<option value="13">Atendeu</option>
-				<option value="14">Agendamento Confirmado</option>
-				<option value="15">Não Compareceu</option>
-                <option value="16">Em Andamento</option>
-                <option value="17">Pendências</option>
-				
-            </select>
+            <?php
+            require_once 'Classes/contato.php';
+            $contato = new Contato();
+
+            $contato->geraSelectStatus();
+            ?>
         
             <span class="label_cadastro">Observação:</span>
             <textarea name="obs" rows="4" cols="50" class="cadastro_input" placeholder="Digite uma observação."></textarea>
