@@ -56,6 +56,21 @@
     if(isset($_POST['status'])){
     require_once 'Classes/Cliente.php';
     $con = new Cliente();
+
+    require_once 'Classes/Contato.php';
+    $contato = new Contato();
+
+    if ($_POST['status'] == 99) {
+        echo'<div class="titulo-secao">
+        Clientes sem contato registrado:
+        </div>';
+    }else{
+        echo'<div class="titulo-secao">
+                Clientes com último contato igual a - '.$contato->resolveStatus($_POST['status']).':
+             </div>';
+    }
+    
+
     $con->listagemPorStatus($_POST['status']);
  
     }
