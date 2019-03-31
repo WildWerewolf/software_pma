@@ -12,6 +12,7 @@
     <link href="fonts/Hind-Regular.ttf" rel="stylesheet">
 </head>
 
+
 <body>
     <div class="Site">
         <?php include "header.php"; ?>
@@ -24,22 +25,29 @@
     <form method="GET" action="listagem_contato.php"><div>
     <div class="container-datas">
     
-            <div class="col-4">
+            <div class="col-6">
             <span class ="label_cadastro">data inicial:</span>
             <input type="date" name="dataini" class="cadastro_input" placeholder="Data" required>
             </div>
-        
-     
-        
-        
-        
-        <h1 class ="label_cadastro">até</h1>
-        <div class="col-4">
+
+    
+        <div class="col-6">
                <span class ="label_cadastro">data final:</span>
                <input type="date" name="datafim" class="cadastro_input" placeholder="Data" required>
                </div>
-        <div class="col-12">
-        <input class="cadastro_btn" type="submit" name="enviar" value="Listar">
+
+        <div class="col-9"  >
+            <?php
+
+                require_once 'Classes/Contato.php';
+                $contato = new Contato();
+
+                $contato->geraSelectStatus('totais');
+            
+            ?>
+        </div>
+        <div class="col-3 botao_listar">
+        <input class="cadastro_cadastrar cadastro_btn" type="submit" name="enviar" value="Listar">
         </div>
         </div>
     <br>
@@ -52,7 +60,7 @@
     if(isset($_GET['dataini']) && isset($_GET['datafim'])){
     require_once 'Classes/contato.php';
     $con = new Contato();
-    $con->listarContatos($_GET['dataini'], $_GET['datafim']);
+    $con->listarContatos($_GET['dataini'], $_GET['datafim'], $_GET['status']);
     
     }
     

@@ -40,10 +40,10 @@ class Totais
         $this->instanciaCnx();
 
         /*
-         * statusContato == '' significa não especificar qual tipo de contato procurar, 
+         * statusContato == 99 significa não especificar qual tipo de contato procurar, 
          * então a query vai listar todos os contatos desse colaborador no período independente do status
          */
-        if(($statusContato) == ''){
+        if(($statusContato) == 99){
             $whereStatusContato = '';
         }else{
             $whereStatusContato = ' and (c.status = '.$statusContato.')';
@@ -73,10 +73,10 @@ class Totais
         $this->instanciaCnx();
 
         /*
-         * statusContato = '' significa não especificar qual tipo de contato procurar, 
+         * statusContato = 99 significa não especificar qual tipo de contato procurar, 
          * então a query vai listar todos os contatos desse colaborador no período independente do status
          */
-        if(($statusContato) == ''){
+        if(($statusContato) == 99){
             $whereStatusContato = '';
         }else{
             $whereStatusContato = ' and (c.status = '.$statusContato.')';
@@ -165,6 +165,9 @@ class Totais
      */
     public function resultadosDoMês($mes, $ano, $statusContato)
     {
+        require_once 'Contato.php';
+        $contato = new Contato();
+
         $dados = $this->obterColaboradores();
 
         $linha = mysqli_fetch_array($dados);
@@ -179,7 +182,7 @@ class Totais
        
              ' . $this->resolveMes($mes) .
 
-              '</div>';
+              '/'.$ano.' - '.$contato->resolveStatus($statusContato).'</div>';
 
             echo '  <div class="tabela_listagem_clientes container-tabela" style="padding:2%">
         <table cellpadding="6" cellspacing="0" border="0" class="tabela-borda" width="100%">';
@@ -209,6 +212,9 @@ class Totais
      */
     public function resultadosDaSemana($semana, $statusContato){ 
         //echo $statusContato;
+
+        require_once 'Contato.php';
+        $contato = new Contato();
         
         $dados = $this->obterColaboradores();
 
@@ -219,7 +225,7 @@ class Totais
         $cont = 0;
 
         //montando a tabela a partir daqui
-        echo ' <div class="titulo-secao"> Últimos 5 dias </div>';
+        echo ' <div class="titulo-secao"> Últimos 5 dias - '.$contato->resolveStatus($statusContato).'</div>';
 
         echo ' <div class="tabela_listagem_clientes container-tabela" style="padding:2%">
         <table cellpadding="6" cellspacing="0" border="0" class="tabela-borda" width="100%">';

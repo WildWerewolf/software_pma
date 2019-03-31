@@ -533,6 +533,10 @@ table tbody tr:nth-child(2n+1) {
     align-items: center;
     margin-bottom: 10px;
   }
+
+  .botao_listar{
+      padding-top: 20px;
+  }
   
 .cadastro_input{
     background-color: #f1f1f1;

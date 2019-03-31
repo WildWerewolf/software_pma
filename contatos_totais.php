@@ -66,26 +66,15 @@
                
 
                      <div class="col-6">
-                <span class="label_cadastro">Qual status?</span>
-                <select name="statusContato" class="cadastro_input">
-                    <option value="">Todos</option>
-                    <option value="0">Agendado</option>
-                    <option value="1">Não atendido</option>
-                    <option value="2">Não interessado</option>
-                    <option value="3">Número Errado</option>
-                    <option value="4">Prescrito</option>
-                    <option value="5">Possui Processo Ativo</option>
-                    <option value="6">Reconquista</option>
-                    <option value="7">Interessado</option>
-                    <option value="8">Caixa Postal</option>
-                    <option value="9">Atendido/Firmado</option>
-                    <option value="10">Atendido/Não Firmado</option>
-                    <option value="11">Atendeu e Desligou</option>
-                    <option value="12">Reagendado</option>
-                    <option value="13">Atendeu</option>
-                    <option value="14">Agendamento Confirmado</option>
-                    <option value="15">Não Compareceu</option>
-                </select>
+                
+                     <?php
+
+                        require_once 'Classes/Contato.php';
+                        $contato = new Contato();
+
+                        $contato->geraSelectStatus('totais');
+
+                    ?>
 
                 </div>
 
@@ -130,16 +119,16 @@
                     require_once 'classes/Totais.php';
                     $totais = new Totais();
 
-                    $totais->resultadosDaSemana($_POST['semana'], $_POST['statusContato']);
+                    $totais->resultadosDaSemana($_POST['semana'], $_POST['status']);
                 } else {
-                    if (!empty($_POST['mes']) && !empty($_POST['ano']) && isset($_POST['statusContato'])) {
+                    if (!empty($_POST['mes']) && !empty($_POST['ano']) && isset($_POST['status'])) {
 
                         //se estiver tudo setado exceto semana, isso é executado pra mostrar os totais dentro do mês informado
                         require_once 'classes/Totais.php';
                         $totais = new Totais();
 
-                        $totais->resultadosDoMês($_POST['mes'], $_POST['ano'], $_POST['statusContato']);
-                    } else { //se $_POST['mes'], $_POST['ano'] e $_POST['statusContato'] não estiverem setadas, encaminha o usuario para a pagina de erro
+                        $totais->resultadosDoMês($_POST['mes'], $_POST['ano'], $_POST['status']);
+                    } else { //se $_POST['mes'], $_POST['ano'] e $_POST['status'] não estiverem setadas, encaminha o usuario para a pagina de erro
                         //header("Location: contatos_totais.php?erro=camposfaltando");
                         //ideia para classe de erro - chamada
                         echo $erro;

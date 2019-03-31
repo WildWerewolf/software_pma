@@ -59,7 +59,11 @@ class Agendamento {
         //obtendo o total de registro do dataset
         $total = mysqli_num_rows($dados);
         $cont = 0;
-        echo '<div class="tabela_listagem_clientes container-tabela">
+        echo '
+        <div class="titulo-secao">
+                agendamentos - '.date('d/m/Y',strtoTime($dtInicial)).' a '
+                .date('d/m/Y',strtoTime($dtFinal)).'
+             </div><div class="tabela_listagem_clientes container-tabela">
         <table cellpadding="10" cellspacing="0" border="0" class="tabela-borda" width="100%">';
          echo '<tr class="tabela-categorias">
              

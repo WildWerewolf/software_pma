@@ -9,9 +9,16 @@ class Contato {
     private $data;
     private $dataContato;
 
-    public function listarContatos($dtInicial, $dtFinal) {
+    public function listarContatos($dtInicial, $dtFinal, $status) {
         require_once 'conexao.php';
         $cnx = new conexao();
+
+        $whereStatusContato = ' and cont.status = '.$status;
+
+        if($status == 99){
+            $whereStatusContato = '';
+        }
+
         $query = ('select adm from colaborador where id = ' . $_SESSION['idcolaborador']);
         $dados = $cnx->executarQuery($query);
         $linha = mysqli_fetch_array($dados);
@@ -29,7 +36,7 @@ class Contato {
                   cont.status, concat((day(cont.data)),'/',(month(cont.data)),'/',(year(cont.data))) as data
                   from ((cliente cli inner join contato cont on cli.id = cont.idcliente) 
                   inner join colaborador col on col.id = cont.idcolaborador)
-                  where cont.data >='" . $dtInicial . "' and cont.data <='" . $dtFinal . "' ";
+                  where cont.data >='" . $dtInicial . "' and cont.data <='" . $dtFinal . "'".$whereStatusContato;
         //echo $query;
 
         $dados = $cnx->executarQuery($query);
@@ -41,7 +48,9 @@ class Contato {
 
         $cont = 0;
         echo'<div class="titulo-secao">
-                TOTAL: ' . $total . '
+                TOTAL - '.date('d/m/Y',strtoTime($dtInicial)).' a '
+                .date('d/m/Y',strtoTime($dtFinal)).' - '
+                .$this->resolveStatus($status).': ' . $total . '
              </div>';
         echo '<div class="tabela_listagem_clientes container-tabela">
         <table cellpadding="10" cellspacing="0" border="0" class="tabela-borda" width="100%">';
@@ -120,6 +129,7 @@ class Contato {
             case 15 : return 'Não Compareceu'; break;
             case 16 : return 'Em Andamento'; break;
             case 17 : return 'Pendências'; break;
+            case 99 : return 'Todos'; break;
             default : return 'Todos'; break;
 
         }
@@ -201,10 +211,23 @@ class Contato {
      * 
      * --Rubens
      */
-    public function geraSelectStatus(){
-        echo '<span class="label_cadastro">Status:</span>
-        <select name="status" class="cadastro_input" required>
-            <option value="">Como foi o contato?</option>
+    public function geraSelectStatus($pagina){
+        
+            if($pagina == 'totais'){
+
+                echo '<span class="label_cadastro">Status:</span>
+                <select name="status" class="cadastro_input">
+                <option value="99">Todos</option>';
+
+            }elseif ($pagina == 'contato'){
+
+
+                echo '<span class="label_cadastro">Status:</span>
+                <select name="status" class="cadastro_input" required>
+                <option value="">Selecione um status</option>';
+            }
+
+            echo '
             <option value="0">Agendado</option>
             <option value="1">Não atendido</option>
             <option value="2">Não interessado</option>

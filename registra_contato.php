@@ -71,7 +71,7 @@
             require_once 'Classes/contato.php';
             $contato = new Contato();
 
-            $contato->geraSelectStatus();
+            $contato->geraSelectStatus('contato');
             ?>
         
             <span class="label_cadastro">Observação:</span>

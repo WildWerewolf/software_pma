@@ -25,17 +25,17 @@
     <form method="GET" action="listagem_agendamentos.php"><div>
     <div class="container-datas">
     
-            <div class="col-4">
+            <div class="col-6">
             <span class ="label_cadastro">data inicial:</span>
             <input type="date" name="dataini" class="cadastro_input" placeholder="Data" required>
             </div>
-        <h1 class ="label_cadastro">até</h1>
-        <div class="col-4">
+       
+        <div class="col-6">
                <span class ="label_cadastro">data final:</span>
                <input type="date" name="datafim" class="cadastro_input" placeholder="Data" required>
                </div>
         <div class="col-12">
-        <input class="cadastro_btn" type="submit" name="enviar" value="Listar">
+        <input class="cadastro_cadastrar cadastro_btn" type="submit" name="enviar" value="Listar">
         </div>
         </div>
     <br>
