@@ -20,16 +20,22 @@
         Painel Clientes
     </div>
     <div class="container-cadastrar">
-        <div class="col-6">
+        <div class="col-4">
             <a href="cadastrar_cliente.php">
                 <button class="btn_painel_interno"><i class="fa fa-user-plus"></i>Cadastrar Clientes</button>         
             </a>
         </div>
-        <div class="col-6">
+        <div class="col-4">
             <a href="listagem_clientes.php">
                 <button class="btn_painel_interno"><i class="fa fa-list-ul"></i> Listar Clientes</button>
             </a>
         </div>
+        <div class="col-4">
+            <a href="listagem_cliente_status.php">
+                <button class="btn_painel_interno"><i class="fa fa-list-ul"></i> Listar Clientes por Status </button>
+            </a>
+        </div>
+    </div>
     </div>
     <?php include "footer.php"; ?>
 </body>

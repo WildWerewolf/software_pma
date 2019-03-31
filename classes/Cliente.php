@@ -90,153 +90,14 @@ class Cliente {
     
 	}
 
-    /*
-        uso = 0 -> lista todos os clientes normalmente
-        uso = 1 -> lista os clientes que estão perto de prescrever
-        uso = 2 -> lista os clientes com datas de rotorno de contato programadas para o dia atual
-    
-    --Rubens
-    */
 
-    public function listarClientes($uso) {
-        require_once 'conexao.php';
-        $cnx = new conexao();
-
-        //verifica se o colaborador logado é admin
-        $query = ('select adm from colaborador where id = '.$_SESSION['idcolaborador']);
-        $dados = $cnx->executarQuery($query);
-        $linha = mysqli_fetch_array($dados);
-		
-		//Comentario abaixo filtrava o administrador
-        
-       /* if ($linha['adm'] != true) {
-            $where = ' where c.idcolcad = ' . $_SESSION['idcolaborador'];
-        } else {
-            $where = ' ';
-        }*/
-
-        
-        // se 1, verifica os clientes perto de prescrever e adiciona a clausula where para que eles sejam listados
-        if ($uso == 1) {
-
-            // na conta feita pelo anderson
-            // 700 é a diferença em dias de hoje até 2 anos atrás menos 1 mês
-            // portanto essa data faz com que o aviso de prescrição fique de 1 mês antes da prescrição
-            // se for pouco tempo, é só diminuir esse número na query abaixo
-
-            //$query = 'select id from cliente where datediff(now(),datafinalempresa) >= 700';
-            //$dados = $cnx->executarQuery($query);
-            $where = ' where datediff(now(),c.datafinalempresa) >=700 ';
-            $from = 'from ((((cliente c inner join colaborador co on c.idcolcad = co.id)
-            inner join processo p on c.id = p.idcliente)
-            inner join adverso a on p.idadverso = a.id)
-            inner join ramo r on r.id = a.id_ramo) ';
-        }elseif($uso == 2){
-
-            $from = ' from ((((cliente c inner join colaborador co on c.idcolcad = co.id)
-                     inner join processo p on c.id = p.idcliente)
-                     inner join adverso a on p.idadverso = a.id)
-                     inner join ramo r on r.id = a.id_ramo)
-                     inner join contato con on con.idcliente = c.id ';
-
-            $where = ' where con.datacontato = cast(now() as date) ';
-
-        }
-		else {
-            $where = '';
-            $from = 'from ((((cliente c inner join colaborador co on c.idcolcad = co.id)
-            inner join processo p on c.id = p.idcliente)
-            inner join adverso a on p.idadverso = a.id)
-            inner join ramo r on r.id = a.id_ramo) ';
-        }
-
-        $query = ("select c.id,concat((day(c.datainiempresa)),'/',(month(c.datainiempresa)),'/',(year(c.datainiempresa))) as 'datainiempresa',
-                               concat((day(c.datafinalempresa)),'/',(month(c.datafinalempresa)),'/',(year(c.datafinalempresa))) as 'datafinalempresa', c.nome, c.telefone, c.celular, c.ender,
-                  a.nome as 'nomeadverso',
-                  r.nome as 'nomeramo',
-                  c.cargo,c.indicacao,co.nome as 'cadastrador',
-                                concat((day(c.datacadastro)),'/',(month(c.datacadastro)),'/',(year(c.datacadastro))) as 'datacadastro'
-                                " . $from . "
-                                " . $where . " order by c.nome;");
-
-        echo $query;
-        
-        //aplicando o sql no link e retornando do dataset (dados)
-        $dados = $cnx->executarQuery($query);
-
-        //apontando para a 1a. linha dataset
-        $linha = mysqli_fetch_array($dados);
-
-        //obtendo o total de registro do dataset
-        $total = mysqli_num_rows($dados);
-
-        $cont = 0;
-
-        //abre uma div para a tabela e abre a tag table
-        echo '<div class="tabela_listagem_clientes container-tabela col-12" style="padding:2%">
-        <table cellpadding="0px" cellspacing="0" border="0" class="tabela-borda" width="auto">';
-
-        //define os nomes das colunas a serem exibidas
-        echo '<tr class="tabela-categorias">
-                <td><i class="fas fa-user"></i> Nome</td>
-                <td><i class="fas fa-phone"></i> Telefone</td>
-                <td><i class="fas fa-mobile-alt"></i> Celular</td>
-                <td><i class="fas fa-map-marked-alt"></i> Período</td>
-                <td><i class="fas fa-angle-down"></i> Adversos</td>
-                <td><i class="fas fa-angle-double-right"></i> Categoria</td>
-                <td><i class="fas fa-address-card"></i> Cargo</td>
-                <td><i class="fas fa-hand-point-right"></i> Indicado de</td>
-                <td><i class="fas"></i> Cadastrado Por </td>
-                <td>Cadastro</td>
-                <td><i class="fas fa-user-edit"></i> Operações Cliente</td>
-            </tr>';
-
-        // com o resultado do sql, lista as linhas dos resultados por um loop de repetição
-        while ($cont < $total) {
-            echo '<tr class="tabela-preenchimento">
-                <td>' . $linha['nome'] . '</td>
-                <td>' . $linha['telefone'] . '</td>
-                <td>' . $linha['celular'] . '</td>              
-                <td>' . $linha['datainiempresa'] . ' - ';
-                
-                if(is_null($linha['datafinalempresa']) || $linha['datafinalempresa'] == '0/0/0'){
-                    echo 'atual';
-                }else{
-                    echo $linha['datafinalempresa'];
-                }
-            
-                echo '</td>
-                <td>' . $linha['nomeadverso'] . '</td>
-                <td>' . utf8_encode($linha['nomeramo']) . '</td>
-                <td>' . $linha['cargo'] . '</td>';
-
-            // verifica se a indicação obtida é null
-            //  se sim, imprime tracinhos kkkk
-            //  senão, busca e imprime o nome do cliente que indicou
-            if (!is_null($linha['indicacao'])) {
-                $query = "select nome from cliente where id = " . $linha['indicacao'];
-                $dados2 = $cnx->executarQuery($query);
-                $linha2 = mysqli_fetch_array($dados2);
-                echo '<td>' . $linha2['nome'] . '</td>';
-            } else {
-                echo '<td> - - - - - - - - </td>';
-            }
-
-
-            echo'<td><strong>' . $linha['cadastrador'] . '</strong></td>    
-                <td>' . $linha['datacadastro'] . '</td>
-                <td>
-				<a href="Perfil_cliente.php?id=' . $linha['id'] . '" ><button class="btn_editar cadastro_btn">Perfil</button></a></td>
-            </tr>';
-
-            $linha = mysqli_fetch_assoc($dados);
-            $cont++;
-        }
-
-        echo ('</table></div>');
-        //echo '<A HREF=index.php?opcao=0 style="color:#f00"> VOLTAR MENU PRINCIPAL</A>';
-    }
-
+    /**
+     * Recebe o id de um cliente. Usa esse id para buscar os dados desse cliente no banco e atualizar os valores desta classe para poder utilizá-los.
+     * 
+     * Método feito por Douglas
+     * 
+     * --Rubens
+     */
     public function instanciar($id) {
 
         $this->setId($id);
@@ -382,25 +243,47 @@ class Cliente {
      * Rubens 20/02/2019
      */
     public function listagemAlfabetica($letraInicial){
-        $query = "select c.id,concat((day(c.datainiempresa)),'/',(month(c.datainiempresa)),'/',(year(c.datainiempresa))) as 'datainiempresa',
-         concat((day(c.datafinalempresa)),'/',(month(c.datafinalempresa)),'/',(year(c.datafinalempresa))) as 'datafinalempresa',
-          c.nome, c.telefone, c.celular, c.ender, a.nome as 'nomeadverso', r.nome as 'nomeramo', c.cargo,c.indicacao,co.nome as 'cadastrador',
-           concat((day(c.datacadastro)),'/',(month(c.datacadastro)),'/',(year(c.datacadastro))) as 'datacadastro'
-         from ((((cliente c inner join colaborador co on c.idcolcad = co.id)
-         inner join processo p on c.id = p.idcliente)
-         inner join adverso a on p.idadverso = a.id)
-         inner join ramo r on r.id = a.id_ramo) where c.nome like '".$letraInicial."%' order by c.nome;";
-
-        $querysimples = 'select c.id as "id",c.nome as "nome", col.nome as "cadastrador", c.datacadastro as "datacadastro" 
+        
+        $query = 'select c.id as "id",c.nome as "nome", col.nome as "cadastrador", c.datacadastro as "datacadastro" 
         from cliente c inner join colaborador col on c.idcolcad = col.id where c.nome like "'.$letraInicial.'%" order by c.nome;';
 
          //echo $query;
 
-         $this->listarResultados($querysimples);
+         $this->listarResultados($query);
 
 
     }
 
+    /**
+     * Recebe um status e lista os clientes cujo último contato foi igual ao status recebido. Lista por ordem de data desses contatos.
+     * 
+     * Se recebe o status 99, ele lista os clientes que não tem contato registrado. Lista por ordem de cadastro desses clientes.
+     * 
+     * --Rubens
+     */
+    public function listagemPorStatus($status){
+
+        if($status != 99){
+            $query = 'SELECT c.id AS "id", c.nome AS "nome", col.nome AS "cadastrador", c.datacadastro AS "datacadastro" 
+                        FROM ( contato cont INNER JOIN cliente c ON cont.idcliente = c.id ) INNER JOIN colaborador col ON col.id = c.idcolcad 
+                        WHERE cont.status = '.$status.' 
+                        AND cont.data IN( SELECT MAX(DATA) FROM contato GROUP BY idcliente ) order by cont.data asc';
+        }else{
+            $query = 'SELECT c.id AS "id", c.nome AS "nome", col.nome AS "cadastrador", c.datacadastro AS "datacadastro" 
+            FROM cliente c INNER JOIN colaborador col ON col.id = c.idcolcad 
+            WHERE c.id IN( SELECT c2.id FROM `cliente` c2 LEFT OUTER JOIN contato co2 ON c2.id = co2.idcliente WHERE co2.idcliente IS NULL ) ORDER BY c.datacadastro ASC';
+        }
+        
+        //echo $query;
+
+        $this->listarResultados($query);
+    }
+
+    /**
+     * Lista os clientes que estão a 30 dias ou menos de prescreverem com base na data de saída da empresa fornecida no cadastro do cliente.
+     * 
+     * --Rubens
+     */
     public function listagemPrescritos(){
         $query = "select c.id,concat((day(c.datainiempresa)),'/',(month(c.datainiempresa)),'/',(year(c.datainiempresa))) as 'datainiempresa', concat((day(c.datafinalempresa)),'/',(month(c.datafinalempresa)),'/',(year(c.datafinalempresa))) as 'datafinalempresa', c.nome, c.telefone, c.celular, c.ender, a.nome as 'nomeadverso', r.nome as 'nomeramo', c.cargo,c.indicacao,co.nome as 'cadastrador', concat((day(c.datacadastro)),'/',(month(c.datacadastro)),'/',(year(c.datacadastro))) as 'datacadastro' from ((((cliente c inner join colaborador co on c.idcolcad = co.id) inner join processo p on c.id = p.idcliente) inner join adverso a on p.idadverso = a.id) inner join ramo r on r.id = a.id_ramo) where datediff(now(),c.datafinalempresa) >=700 order by c.nome;";
 
@@ -411,68 +294,18 @@ class Cliente {
         $this->listarResultados($novaQueryPrescritos);
     }
 
+    /**
+     * Lista os clientes que tenham a data atual(hoje) indicada como data de retorno durante o registro de contato.
+     * 
+     * --Rubens
+     */
     public function listarRetornos(){
-        $query = "SELECT
-        c.id,
-        CONCAT(
-            (DAY(c.datainiempresa)),
-            '/',
-            (MONTH(c.datainiempresa)),
-            '/',
-            (YEAR(c.datainiempresa))
-        ) AS 'datainiempresa',
-        CONCAT(
-            (DAY(c.datafinalempresa)),
-            '/',
-            (MONTH(c.datafinalempresa)),
-            '/',
-            (YEAR(c.datafinalempresa))
-        ) AS 'datafinalempresa',
-        c.nome,
-        c.telefone,
-        c.celular,
-        c.ender,
-        a.nome AS 'nomeadverso',
-        r.nome AS 'nomeramo',
-        c.cargo,
-        c.indicacao,
-        co.nome AS 'cadastrador',
-        CONCAT(
-            (DAY(c.datacadastro)),
-            '/',
-            (MONTH(c.datacadastro)),
-            '/',
-            (YEAR(c.datacadastro))
-        ) AS 'datacadastro'
-    FROM
-        (
-            (
-                (
-                    (
-                        cliente c
-                    INNER JOIN colaborador co ON
-                        c.idcolcad = co.id
-                    )
-                INNER JOIN processo p ON
-                    c.id = p.idcliente
-                )
-            INNER JOIN adverso a ON
-                p.idadverso = a.id
-            )
-        INNER JOIN ramo r ON
-            r.id = a.id_ramo
-        )
-    INNER JOIN contato con ON
-        con.idcliente = c.id
-    WHERE
-        con.datacontato = CAST(NOW() AS DATE)
-    ORDER BY
-        c.nome;";
-
-        $novaQueryRetornos = 'select c.id as "id",c.nome as "nome", col.nome as "cadastrador", c.datacadastro as "datacadastro" 
-        from (cliente c inner join colaborador col on c.idcolcad = col.id) inner join contato con on con.idcliente = c.id  
+        $query = "SELECT        c.id,        CONCAT(            (DAY(c.datainiempresa)),            '/',            (MONTH(c.datainiempresa)),            '/',            (YEAR(c.datainiempresa))        ) AS 'datainiempresa',       CONCAT(            (DAY(c.datafinalempresa)),            '/',            (MONTH(c.datafinalempresa)),            '/',            (YEAR(c.datafinalempresa))        ) AS 'datafinalempresa',        c.nome,        c.telefone,        c.celular,        c.ender,        a.nome AS 'nomeadverso',        r.nome AS 'nomeramo',        c.cargo,        c.indicacao,        co.nome AS 'cadastrador',        CONCAT(            (DAY(c.datacadastro)),            '/',            (MONTH(c.datacadastro)),            '/',            (YEAR(c.datacadastro))        ) AS 'datacadastro'    FROM        (            (                (                    (                        cliente c                    INNER JOIN colaborador co ON                        c.idcolcad = co.id                    )                INNER JOIN processo p ON                    c.id = p.idcliente                )            INNER JOIN adverso a ON                p.idadverso = a.id            )        INNER JOIN ramo r ON            r.id = a.id_ramo        )    INNER JOIN contato con ON        con.idcliente = c.id    WHERE        con.datacontato = CAST(NOW() AS DATE)    ORDER BY        c.nome;";        
+        
+        $novaQueryRetornos = 'select c.id as "id",c.nome as "nome", col.nome as "cadastrador", c.datacadastro as "datacadastro"         
+        from (cliente c inner join colaborador col on c.idcolcad = col.id) inner join contato con on con.idcliente = c.id          
         where con.datacontato = CAST(NOW() AS DATE) order by c.nome;';
-
+        
         $this->listarResultados($novaQueryRetornos);
     }
 

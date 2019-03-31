@@ -221,10 +221,17 @@ class Contato {
 
             }elseif ($pagina == 'contato'){
 
-
                 echo '<span class="label_cadastro">Status:</span>
                 <select name="status" class="cadastro_input" required>
                 <option value="">Selecione um status</option>';
+
+            }elseif ($pagina == 'porstatus') {
+                
+                echo '<span class="label_cadastro">Status:</span>
+                <select name="status" class="cadastro_input" required>
+                <option value="">Selecione</option>
+                <option value="99">Nenhum Contato</option>';
+
             }
 
             echo '
