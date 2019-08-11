@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width">
     <title>PMA Advocacia - Listagem de Colaboradores</title>
     <script language="JavaScript" src="js/jquery-3.3.1.js"></script>
+    <script language="JavaScript" src="js/Jquery.mask.min.js"></script>
     <script src="aos/aos.js"></script>
     <link href="aos/aos.css" rel="stylesheet" type="text/css" />
     <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -53,6 +54,10 @@
         <div class="col-4">
             <span class="label_cadastro">Celular:</span>
             <input name="celular" class="cadastro_input" placeholder="Digite o nome do cliente" required>
+        </div>
+        <div class="col-4">
+            <span class="label_cadastro">E-mail:</span>
+            <input name="email" class="cadastro_input" placeholder="Digite o e-mail do cliente">
         </div>
         
          <div class="col-4">

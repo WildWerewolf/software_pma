@@ -6,6 +6,7 @@ class Cliente {
     private $nome;
     private $telefone;
     private $celular;
+    private $email;
     private $ender;
     private $adverso;
     private $cargo;
@@ -20,6 +21,7 @@ class Cliente {
         $this->setNome(strtoupper($dados['nome']));
         $this->setTelefone($dados['telefone']);
         $this->setCelular($dados['celular']);
+        $this->setEmail($dados['email']);
         $this->setEnder($dados['endereco']);
         $this->setAdverso(strtoupper($dados['adverso']));
         $this->setCargo(strtoupper($dados['cargo']));
@@ -63,8 +65,8 @@ class Cliente {
 
        
         
-        $query = ("insert into cliente (nome, telefone, celular, ender, cargo, indicacao, idcolcad, datacadastro,datainiempresa,datafinalempresa) values "
-                . "('$this->nome','$this->telefone','$this->celular','$this->ender','$this->cargo',$this->indicacao,$this->idcolcad,now(),$this->datainiempresa,$this->datafinalempresa);");
+        $query = ("insert into cliente (nome, telefone, celular, email, ender, cargo, indicacao, idcolcad, datacadastro,datainiempresa,datafinalempresa) values "
+                . "('$this->nome','$this->telefone','$this->celular','$this->email','$this->ender','$this->cargo',$this->indicacao,$this->idcolcad,now(),$this->datainiempresa,$this->datafinalempresa);");
         
         echo $query . '<br><br>';
 
@@ -171,8 +173,8 @@ class Cliente {
         $cont = 0;
 
         //abre uma div para a tabela e abre a tag table
-        echo '<div class="tabela_listagem_clientes container-tabela" style="padding:2%">
-        <table cellpadding="6" cellspacing="0" border="0" class="tabela-borda" width="80%">';
+        echo '<div class="tabela_listagem_clientes container-tabela col-12" style="padding:2%">
+        <table cellpadding="0px" cellspacing="0" border="0" class="tabela-borda" width="auto">';
 
         //define os nomes das colunas a serem exibidas
         echo '<tr class="tabela-categorias">
@@ -194,7 +196,7 @@ class Cliente {
             echo '<tr class="tabela-preenchimento">
                 <td>' . $linha['nome'] . '</td>
                 <td>' . $linha['telefone'] . '</td>
-                <td>' . $linha['celular'] . '</td>
+                <td>' . $linha['celular'] . '</td>              
                 <td>' . $linha['datainiempresa'] . ' - ';
                 
                 if(is_null($linha['datafinalempresa']) || $linha['datafinalempresa'] == '0/0/0'){
@@ -223,9 +225,8 @@ class Cliente {
 
             echo'<td><strong>' . $linha['cadastrador'] . '</strong></td>    
                 <td>' . $linha['datacadastro'] . '</td>
-                <td> <a href="registra_contato.php?id=' . $linha['id'] . '" > <button class="btn_editar">Contato</button></a>
-                <a href="registra_agendamento.php?id=' . $linha['id'] . '" ><button class="btn_salvar">Agendar</button></a>
-				<!--<a href="Perfil.php?id=' . $linha['id'] . '" ><button class="btn_editar">Editar</button></a>--></td>
+                <td>
+				<a href="Perfil_cliente.php?id=' . $linha['id'] . '" ><button class="btn_editar cadastro_btn">Perfil</button></a>
             </tr>';
 
             $linha = mysqli_fetch_assoc($dados);
@@ -239,7 +240,15 @@ class Cliente {
     public function instanciar($id) {
 
         $this->setId($id);
-        $query = "Select * from cliente where id=" . $id;
+        $query = "select 
+        c.id,c.nome,c.telefone,c.celular,c.ender,c.cargo,c.datainiempresa,c.datafinalempresa,c.indicacao,c.email,
+        a.id as 'idadverso',a.nome as 'adverso',
+        r.id as 'idramo',r.nome as 'ramo' 
+         from (((cliente c
+         inner join processo p on p.idCliente = c.id)
+         inner join adverso a on a.id = p.idAdverso)
+         inner join  ramo r on r.id = a.id_Ramo)
+         where c.id = " . $id;
 
         require_once 'conexao.php';
         $cnx = new conexao();
@@ -247,49 +256,121 @@ class Cliente {
         $dados = $cnx->executarQuery($query);
         $linha = mysqli_fetch_array($dados);
         $this->setNome($linha['nome']);
+        $this->setTelefone($linha['telefone']);
+        $this->setCelular($linha['celular']);
+        $this->setEmail($linha['email']);
+        $this->setEnder($linha['ender']);
+        $this->setAdverso($linha['adverso']);
+        $this->setCargo($linha['cargo']);
+        $this->setDataIniEmpresa($linha['datainiempresa']);
+        $this->setDataFinalEmpresa($linha['datafinalempresa']);
+        $this->setRamo($linha['idramo']);
+        $this->setIndicacao($linha['indicacao']);
     }
+
 	
-	//Comentario a baixo é o atualiza cliente que ainda não esta funcionando
+	//abaixo é o atualizarCliente editado por Douglas
 	
-	    /*public function atualizarClientes($formulario) {
+	   public function atualizarCliente($formulario) {
+       require_once 'conexao.php';
         $cnx = new conexao();
-        
+        $idcliente = $_SESSION['cliente'];
         $query = "update cliente set ";
         
         if(isset($formulario['nome'])){
-            $query = $query."nome = '".strtoupper($formulario['nome'])."'";
+            $query = $query."nome = '".strtoupper($formulario['nome'])."',";
         }
         
         if(isset($formulario['telefone'])){
-            $query = $query."telefone = '".strtoupper($formulario['telefone'])."'";
+            $query = $query."telefone = '".strtoupper($formulario['telefone'])."',";
         }
         
         if(isset($formulario['celular'])){
-            $query = $query."celular = '".strtoupper($formulario['celular'])."'";
+            $query = $query."celular = '".strtoupper($formulario['celular'])."',";
+        }
+
+        if(isset($formulario['email'])){
+            $query = $query."email = '".strtoupper($formulario['email'])."',";
         }
 		
 		if(isset($formulario['datainiempresa'])){
-            $query = $query."datainiempresa = '".strtoupper($formulario['datainiempresa'])."'";
+            $query = $query."datainiempresa = '".strtoupper($formulario['datainiempresa'])."',";
         }
 		
 		if(isset($formulario['datafinalempresa'])){
-            $query = $query."datafinalempresa = '".strtoupper($formulario['datafinalempresa'])."'";
-        }
-		
-		if(isset($formulario['nomeadverso'])){
-            $query = $query."nomeadverso = '".strtoupper($formulario['nomeadverso'])."'";
-        }
-		
-		if(isset($formulario['nomeramo'])){
-            $query = $query."nomeramo = '".strtoupper($formulario['nomeramo'])."'";
+            if(empty($formulario['datafinalempresa'])) {
+                $query = $query.'datafinalempresa = null , ';        
+               } else {
+                $query = $query."datafinalempresa = '".strtoupper($formulario['datafinalempresa'])."',";
+             }
+     
+           
         }
 		
 		if(isset($formulario['cargo'])){
-            $query = $query."cargo = '".strtoupper($formulario['cargo'])."'";
+            $query = $query."cargo = '".strtoupper($formulario['cargo'])."',";
+        }
+
+        if(isset($formulario['endereco'])){
+            $query = $query."ender = '".strtoupper($formulario['endereco'])."',";
         }
 		
 		if(isset($formulario['indicacao'])){
-            $query = $query."indicacao = '".strtoupper($formulario['indicacao'])."'";
+            if (empty($formulario['indicacao'])) {
+                $query = $query.'indicacao = null  ';
+            } else {
+                $query = $query."indicacao = '".strtoupper($formulario['indicacao'])."' ";
+            }
+           
+        }
+
+
+
+        $query = $query."where id = ".$idcliente."";
+        echo $query;
+        
+         $cnx->executarQuery($query);
+
+         if(!empty($formulario['novoadverso']) && !empty($formulario['novoramo'])){
+
+             $this->adicionarAdverso($idcliente,$formulario['novoadverso'],$formulario['novoramo']);
+
+            }
+
+
+        /*
+        $this->setNome($linha['nome']);
+        $this->setTelefone($linha['telefone']);
+        $this->setCelular($linha['celular']);
+        $this->setEmail($linha['email']);
+        $this->setEnder($linha['ender']);
+        $this->setAdverso($linha['adverso']);
+        $this->setCargo($linha['cargo']);
+        $this->setDataIniEmpresa($linha['datainiempresa']);
+        $this->setDataFinalEmpresa($linha['datafinalempresa']);
+        $this->setRamo($linha['idramo']);
+        $this->setIndicacao($linha['indicacao']);
+        */
+        header('Location:perfil_cliente.php?id='.$idcliente);
+    }
+
+        private function adicionarAdverso($idcliente, $nome, $ramo){
+            
+            require_once 'conexao.php';
+            $cnx = new conexao();
+            
+            $query = 'insert into adverso (nome,id_ramo, idcolcad) values ("'.$nome.'",'.$ramo.','.$_SESSION['idcolaborador'].')';
+
+            $cnx->executarQuery($query);
+
+            $query = 'select max(id) as "id" from adverso where idcolcad = '.$_SESSION['idcolaborador'];
+
+            $dados = $cnx->executarQuery($query);
+            $linha = mysqli_fetch_array($dados);
+
+            $query = "insert into processo values (".$idcliente.",".$linha['id'].")";
+
+            $cnx->executarQuery($query);
         }
         
         /*SOBRE QUANDO A INTENÇÃO DO USUÁRIO ERA 
@@ -379,6 +460,9 @@ class Cliente {
     function getCelular() {
         return $this->celular;
     }
+    function getEmail() {
+        return $this->email;
+    }
 
     function getEnder() {
         return $this->ender;
@@ -420,6 +504,9 @@ class Cliente {
 
     function setCelular($celular) {
         $this->celular = $celular;
+    }
+    function setemail($email) {
+        $this->email = $email;
     }
 
     function setEnder($ender) {
